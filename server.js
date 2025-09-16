@@ -1,12 +1,10 @@
-// Include it and extract some methods for convenience
-const server = require('server');
-const { get, post } = server.router;
+const express = require('express');
+const app = express();
 
-// Launch server with options and a couple of routes
-server({ port: 8080 }, [
-  get('/', ctx => 'Hello world'),
-  post('/', ctx => {
-    console.log(ctx.data);
-    return 'ok';
-  })
-]);
+app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+app.listen(80);
