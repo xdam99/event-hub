@@ -1,0 +1,58 @@
+services:
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true 
+    networks:
+      - frontend
+
+  server:
+    build:
+      context: ./server
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    networks:
+      - backend
+      - frontend
+      - phpmyadmin-network
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_SERVER: "mysql"
+      MYSQL_USER: "root"
+      MYSQL_ROOT_PASSWORD: "1234"
+      MYSQL_DATABASE: "db_event-hub"
+    networks:
+      - backend
+      - phpmyadmin-network
+
+  mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "1234"
+    networks:
+      - backend
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: "mysql"
+      PMA_USER: "root"
+      PMA_PASSWORD: "1234"
+    ports:
+      - "1234:80"
+    depends_on:
+      - mysql
+    networks:
+      - phpmyadmin-network
+
+networks:
+  frontend:
+  backend:
+  phpmyadmin-network:
