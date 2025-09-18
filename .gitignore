@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> 96d0fbad54abeaa40c71618b98f9d74890fa2828
 # Logs
 logs
 *.log
@@ -24,5 +27,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
 *.env
 >>>>>>> Stashed changes
+=======
+.env
+>>>>>>> 96d0fbad54abeaa40c71618b98f9d74890fa2828
