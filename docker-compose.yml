@@ -20,7 +20,6 @@ services:
       - mongo
     volumes:
       - ./server:/app
-      - /app/node_modules
     networks:
       - backend
       - frontend

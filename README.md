@@ -14,17 +14,12 @@ Voici comment va se faire ma manière de travailler selon la méthode **Workflow
             * Back-hotfixe
 
 ## Stack utilisée
-Pour le site :
 * React
 * Webpack
 * Babel
 * TypeScript
 * MySQL
 * MongoDB
-
-Pour simuler le serveur :
-* Ubuntu
-* Apache2
 * PhpMyAdmin
 * Docker (+docker-compose)
 
