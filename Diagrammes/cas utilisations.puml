@@ -1,0 +1,42 @@
+@startuml Event-Hub
+left to right direction
+actor Visiteurs
+actor Abonnés
+actor Organisateurs
+actor Modérateurs
+actor Administrateurs
+
+rectangle "Event-hub" {
+    usecase "Se connecter" as UC1
+
+    usecase "Modifier son profil" as UC2
+    usecase "Réserver" as UC3
+
+    usecase "Créer events" as UC4
+}
+
+:Visiteurs: <|-- :Abonnés:
+:Abonnés: <|-- :Organisateurs:
+:Abonnés: <|-- :Modérateurs:
+:Modérateurs: <|-- :Administrateurs:
+
+Visiteurs -> UC1
+
+Abonnés -> UC2
+Abonnés -> UC3
+
+Organisateurs -> UC2
+Organisateurs -> UC3
+Organisateurs -> UC4
+
+Modérateurs -> UC2
+Modérateurs -> UC3
+Modérateurs -> UC4
+
+Administrateurs -> UC2
+Administrateurs -> UC3
+Administrateurs -> UC4
+
+
+
+@enduml
