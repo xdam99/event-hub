@@ -1,5 +1,8 @@
 # Projet Event-hub
 ![Event-Hub-Damien.J 1.0.0](https://img.shields.io/badge/Event--Hub--Damien.J-1.0.0-red)
+![react](https://img.shields.io/badge/React.JS/Babel/Webpack-FAFA00)
+![typescript](https://img.shields.io/badge/TypeScript-0055AA)
+![mysql](https://img.shields.io/badge/MySQL-FF00FF)
 
 ## Workflow
 Voici comment va se faire ma manière de travailler selon la méthode **Workflow** :
@@ -37,9 +40,3 @@ Voici comment va se faire ma manière de travailler selon la méthode **Workflow
 
 ## Signature
 ### Damien.J
-* Hotfixes
-* Release
-* Develop
-* Features
-
-## Enjoy !
