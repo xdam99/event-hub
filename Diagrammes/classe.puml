@@ -1,0 +1,118 @@
+@startuml EventHub
+
+' === UTILISATEURS ===
+class Visiteur
+class VisiteurConnecte
+class Organisateur
+class Moderateur
+class Administrateur
+
+' INTERFACES
+interface ICompteController {
+    +connecter(mail, mdp)
+    +deconnecter()
+    +creerCompte(compte)
+}
+
+interface IEvenementController {
+    +creerEvenement(evenement)
+    +modifierEvenement(idEvenement, eevenement)
+    +supprimerEvenement(idEvenement)
+}
+
+interface IModerationController {
+    +bannir(name, mail)
+    +debannir(name)
+    +supprimerCommentaire(idCommentaire, compte)
+}
+
+interface IAdministrateurController {
+    +controllerStat()
+    +supprimerCompte(compte)
+}
+
+interface ICommentaireController {
+    +ajouterCommentaire(evenement, contenu)
+    +signalerCommentaire(idCommentaire)
+}
+
+' CLASS
+class Compte {
+    -name
+    -mail
+    -mdp
+}
+
+class Evenement {
+    -idEvenement
+    -details
+}
+
+class InfoEvenement {
+    -titre
+    -date
+    -lieu
+    -description
+}
+
+class Commentaire {
+    -idCommentaire
+    -contenu
+    -date
+    -auteur
+}
+
+class CompteController implements ICompteController {
+    +connecter(mail, mdp)
+    +deconnecter()
+    +creerCompte(compte)
+}
+
+class EvenementController implements IEvenementController {
+    +creerEvenement(evenement)
+    +modifierEvenement(idEvenement, evenement)
+    +supprimerEvenement(idEvenement)
+}
+
+class ModerationController implements IModerationController {
+    +bannir(name, mail)
+    +debannir(name)
+    +supprimerCommentaire(idCommentaire)
+}
+
+class AdministrateurController implements IAdministrateurController {
+    +controllerStat()
+    +supprimerCompte(compte)
+}
+
+class CommentaireController implements ICommentaireController {
+    +ajouterCommentaire(evenement, contenu)
+    +signalerCommentaire(idCommentaire)
+}
+
+Visiteur -- VisiteurConnecte
+VisiteurConnecte <|-- Organisateur
+VisiteurConnecte <|-- Moderateur
+VisiteurConnecte <|-- Administrateur
+VisiteurConnecte "*"  -- "1" Compte
+
+VisiteurConnecte ..> ICompteController
+VisiteurConnecte ..> ICommentaireController
+Organisateur ..> IEvenementController
+Moderateur ..> IEvenementController
+Moderateur ..> IModerationController
+Administrateur ..> IEvenementController
+Administrateur ..> IModerationController
+Administrateur ..> IAdministrateurController
+
+Evenement --> InfoEvenement
+CompteController --> Compte
+EvenementController --> Evenement
+
+Commentaire --> Evenement
+Commentaire -- Compte
+
+CommentaireController --> Commentaire
+
+
+@enduml
