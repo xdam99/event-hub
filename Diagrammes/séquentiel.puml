@@ -1,0 +1,50 @@
+@startuml EventHub
+
+actor Visiteur
+participant CompteController
+participant Compte
+
+actor Organisateur
+participant EvenementController
+participant Evenement
+
+actor VisiteurConnecte
+participant CommentaireController
+participant Commentaire
+
+actor Moderateur
+participant ModerationController
+
+== Création de compte ==
+Visiteur -> CompteController : creerCompte(compte)
+CompteController -> Compte : sauvegarder compte
+Compte --> CompteController : confirmation
+CompteController --> Visiteur : compte créé
+
+== Connexion ==
+Visiteur -> CompteController : connecter(mail, mdp)
+CompteController --> Visiteur : réponse connexion
+
+== Création d’un événement ==
+Organisateur -> EvenementController : creerEvenement(evenement)
+EvenementController -> Evenement : sauvegarder
+Evenement --> EvenementController : confirmation
+EvenementController --> Organisateur : événement créé
+
+== Ajout d’un commentaire ==
+VisiteurConnecte -> CommentaireController : ajouterCommentaire(evenement, contenu)
+CommentaireController -> Commentaire : sauvegarder
+Commentaire --> CommentaireController : confirmation
+CommentaireController --> VisiteurConnecte : commentaire ajouté
+
+== Signalement d’un commentaire ==
+Moderateur -> CommentaireController : signalerCommentaire(idCommentaire)
+CommentaireController --> Moderateur : commentaire signalé
+
+== Suppression d’un commentaire ==
+Moderateur -> ModerationController : supprimerCommentaire(idCommentaire, compte)
+ModerationController -> Commentaire : supprimer
+Commentaire --> ModerationController : confirmation
+ModerationController --> Moderateur : commentaire supprimé
+
+@enduml
