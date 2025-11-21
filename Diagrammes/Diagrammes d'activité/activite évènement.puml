@@ -1,0 +1,220 @@
+@startuml EventHub-Activite-Globale
+
+title EventHub – Activité globale par rôle (Version complète)
+
+start
+:Accès à EventHub;
+
+'-------------------------------------------------------------------
+' VISITEUR
+'-------------------------------------------------------------------
+partition "Visiteur" {
+    :Consulter liste des évènements;
+    if (A un compte ?) then (Oui)
+        :Se connecter;
+    else (Non)
+        :Créer un compte;
+        :Se connecter;
+    endif
+}
+
+'-------------------------------------------------------------------
+' PARTICIPANT
+'-------------------------------------------------------------------
+partition "Participant" {
+
+    :Rechercher événements (multi-critères);
+    :Consulter détails d’un événement;
+
+    if (Souhaite réserver ?) then (Oui)
+        :Choisir un billet;
+
+        if (Billet disponible ?) then (Oui)
+            :Payer via passerelle de paiement;
+
+            if (Paiement OK ?) then (Oui)
+                :Recevoir ticket PDF avec QR Code;
+
+                fork
+                    :Confirmation d’achat par email;
+                fork again
+                    :Utiliser QR Code à l’entrée;
+                    :Accéder aux services sur site;
+                end fork
+
+                :Retour à l'accueil;
+
+            else (Non)
+                :Afficher erreur paiement;
+                :Retour à l'accueil;
+            endif
+
+        else (Non)
+            :Afficher "Billet indisponible";
+            :Proposer alertes de réapprovisionnement;
+            :Retour à l'accueil;
+        endif
+    endif
+
+    if (Souhaite annuler réservation ?) then (Oui)
+        :Sélectionner réservation;
+
+        if (Billet utilisé ?) then (Oui)
+            :Impossible d’annuler → billet déjà utilisé;
+            :Retour à l'accueil;
+        else (Non)
+            :Demande de confirmation d’annulation;
+            :Retour à l'accueil;
+        endif
+    endif
+
+    if (Souhaite se déconnecter ?) then (Oui)
+        :Déconnexion;
+        stop
+    endif
+}
+
+'-------------------------------------------------------------------
+' ORGANISATEUR
+'-------------------------------------------------------------------
+partition "Organisateur" {
+    if (Utilisateur est Organisateur ?) then (Oui)
+
+        :Accéder au tableau de bord organisateur;
+        :Créer un nouvel événement;
+
+        if (Lieu disponible ?) then (Oui)
+            :Configurer lieu, tarifs, artistes, capacité;
+        else (Non)
+            :Choisir un autre lieu;
+        endif
+
+        :Publier l'événement;
+
+        :Suivre ventes et inscriptions;
+        if (Souhaite ajuster billets ?) then (Oui)
+            :Modifier nombre de billets / catégories;
+        endif
+
+        if (Annuler l'événement ?) then (Oui)
+            :Envoyer notification aux participants;
+            :Déclencher remboursement automatique;
+        endif
+
+        :Gérer disponibilités des salles;
+        :Consulter statistiques d’événements;
+
+        :Retour à l'accueil;
+    endif
+}
+
+'-------------------------------------------------------------------
+' RÉGISSEUR
+'-------------------------------------------------------------------
+partition "Régisseur" {
+    if (Utilisateur est Régisseur ?) then (Oui)
+
+        :Consulter planning global;
+        :Planifier créneaux des artistes;
+
+        if (Conflits horaires ?) then (Oui)
+            :Réorganiser planning;
+        endif
+
+        :Coordonner logistique (transport, hébergement);
+
+        if (Manque matériel ?) then (Oui)
+            :Demander équipement supplémentaire;
+        endif
+
+        :Superviser techniciens;
+        :Contrôler préparation des scènes;
+
+        :Retour à l'accueil;
+    endif
+}
+
+'-------------------------------------------------------------------
+' TECHNICIEN
+'-------------------------------------------------------------------
+partition "Technicien" {
+    if (Utilisateur est Technicien ?) then (Oui)
+
+        :Consulter tâches assignées;
+
+        if (Vérification matériel OK ?) then (Oui)
+            :Installer son / lumière;
+        else (Non)
+            :Signaler matériel défectueux;
+            :Demander remplacement;
+        endif
+
+        :Effectuer tests techniques;
+
+        if (Problème détecté ?) then (Oui)
+            :Résoudre problème;
+        endif
+
+        :Assister pendant performances;
+        :Ajuster réglages en temps réel;
+        :Retour à l'accueil;
+    endif
+}
+
+'-------------------------------------------------------------------
+' ARTISTE
+'-------------------------------------------------------------------
+partition "Artiste" {
+    if (Utilisateur est Artiste ?) then (Oui)
+
+        :Consulter planning des prestations;
+
+        if (Conflit avec horaire ?) then (Oui)
+            :Demander modification au régisseur;
+        endif
+
+        :Envoyer fiche technique;
+        :Confirmer besoins matériels;
+
+        :Se présenter sur site;
+        :Se préparer sur scène;
+        :Effectuer prestation;
+
+        if (Souhaite consulter évaluations ?) then (Oui)
+            :Consulter retours du public;
+        endif
+
+        :Retour à l'accueil;
+    endif
+}
+
+'-------------------------------------------------------------------
+' ADMINISTRATEUR
+'-------------------------------------------------------------------
+partition "Administrateur" {
+    if (Utilisateur est Administrateur ?) then (Oui)
+
+        :Accéder au tableau de bord admin;
+        :Gérer comptes utilisateurs;
+
+        if (Signaler abus ?) then (Oui)
+            :Suspendre/Restreindre compte;
+        endif
+
+        :Gérer catégories d'évènements;
+        :Configurer paramètres de la plateforme;
+
+        if (Maintenance programmée ?) then (Oui)
+            :Planifier interruption du service;
+            :Notifier utilisateurs;
+        endif
+
+        :Consulter statistiques globales;
+        :Exporter rapports;
+
+        :Retour à l'accueil;
+    endif
+}
+
+stop
+@enduml

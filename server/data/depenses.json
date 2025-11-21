@@ -1,0 +1,98 @@
+[
+  {
+    "_id": "a1c626cd6efbb9a44c48ff99",
+    "idBudget": "e6bdd2cb4bcbf6bed6aae0ab",
+    "type": "Automotive",
+    "montant": 11439.521988915274
+  },
+  {
+    "_id": "d3592affe86ea87b1e64c1a7",
+    "idBudget": "e6bdd2cb4bcbf6bed6aae0ab",
+    "type": "Baby",
+    "montant": 8565.322389343452
+  },
+  {
+    "_id": "b040ca8188e5b4e7afd4787c",
+    "idBudget": "e6bdd2cb4bcbf6bed6aae0ab",
+    "type": "Jewelry",
+    "montant": 9097.457070173314
+  },
+  {
+    "_id": "b005c7ffc4dcfd7121acec81",
+    "idBudget": "e6bdd2cb4bcbf6bed6aae0ab",
+    "type": "Games",
+    "montant": 19532.211349215122
+  },
+  {
+    "_id": "b74685ebfbfce5a942aff2b0",
+    "idBudget": "e6bdd2cb4bcbf6bed6aae0ab",
+    "type": "Health",
+    "montant": 17383.001048229493
+  },
+  {
+    "_id": "aa91f3bec51fd65b89de0cf7",
+    "idBudget": "e6bdd2cb4bcbf6bed6aae0ab",
+    "type": "Toys",
+    "montant": 10775.870437223168
+  },
+  {
+    "_id": "5b60d1a80eeef2b3fccddbae",
+    "idBudget": "e6bdd2cb4bcbf6bed6aae0ab",
+    "type": "Toys",
+    "montant": 4393.319300520267
+  },
+  {
+    "_id": "aa6f9c7e84bc2bf8dfc76ad4",
+    "idBudget": "8cc948f019bd70ebf29d1ebc",
+    "type": "Kids",
+    "montant": 8019.648999745612
+  },
+  {
+    "_id": "dcaf91f1a5bbffdce1439f97",
+    "idBudget": "8cc948f019bd70ebf29d1ebc",
+    "type": "Music",
+    "montant": 19019.496930527475
+  },
+  {
+    "_id": "1652545006ae50cb0e81b58b",
+    "idBudget": "8cc948f019bd70ebf29d1ebc",
+    "type": "Sports",
+    "montant": 1981.4047010952274
+  },
+  {
+    "_id": "adaadb87ce832df5dcdfc4d5",
+    "idBudget": "8cc948f019bd70ebf29d1ebc",
+    "type": "Outdoors",
+    "montant": 11272.865162283391
+  },
+  {
+    "_id": "ba0490b57c8d0b16c8b0ee5b",
+    "idBudget": "a8d6dd71946ddb0ef9ae6c56",
+    "type": "Books",
+    "montant": 1145.9971319923793
+  },
+  {
+    "_id": "acbd8ce45aaad1a5fdb28b8f",
+    "idBudget": "a8d6dd71946ddb0ef9ae6c56",
+    "type": "Tools",
+    "montant": 12325.038574457032
+  },
+  {
+    "_id": "dccc6fdb0dfdac942ed478ed",
+    "idBudget": "a8d6dd71946ddb0ef9ae6c56",
+    "type": "Kids",
+    "montant": 2538.792031558419
+  },
+  {
+    "_id": "6cef8567d6a0185db29b5f0c",
+    "idBudget": "a8d6dd71946ddb0ef9ae6c56",
+    "type": "Jewelry",
+    "montant": 15788.963475213159
+  },
+  {
+    "_id": "de8a1deaf91bab0fee78ea98",
+    "idBudget": "a8d6dd71946ddb0ef9ae6c56",
+    "type": "Toys",
+    "montant": 5336.256629248285
+  }
+]

@@ -1,0 +1,136 @@
+@startuml ER_EventHub
+
+' ENTITÉS
+
+entity Utilisateur {
+    * id
+    --
+    nom
+    mail
+    mdp
+}
+
+entity Participant {
+    * idParticipant
+}
+
+entity Artiste {
+    * idArtiste
+    genreMusical
+    nbJourEvenement
+}
+
+entity Technicien {
+    * idTechnicien
+    materiel
+}
+
+entity Regisseur {
+    * idRegisseur
+    locationMateriel
+}
+
+entity Organisateur {
+    * idOrganisateur
+    partenaire
+}
+
+entity Administrateur {
+    * idAdmin
+}
+
+entity Profil {
+    * idProfil
+    name
+    mail
+    mdp
+}
+
+entity Evenement {
+    * idEvenement
+    nameE
+    descE
+    dateE
+    lieuE
+}
+
+entity Ticket {
+    * idTicket
+    qrCode
+}
+
+entity ReservationLieu {
+    * idLieu
+    lieu
+    lieuPris
+    dateLieuPris
+}
+
+entity Budget {
+    * idBudget
+    depense
+    gain
+}
+
+entity Depense {
+    * idDepense
+    charge
+    salaire
+}
+
+entity Gain {
+    * idGain
+}
+
+entity RapportFinance {
+    * idRapport
+}
+
+entity TypeCommunication {
+    * idTypeComm
+    email
+    sms
+}
+
+entity Feedback {
+    * idFeedback
+    contenu
+    date
+}
+
+entity RapportPerformance {
+    * idPerf
+}
+
+entity RapportAnalytics {
+    * idAnalytics
+}
+
+' RELATIONS
+
+Utilisateur ||--|| Participant
+Participant ||--|| Profil
+
+Participant ||--o{ Artiste
+Participant ||--o{ Technicien
+Participant ||--o{ Regisseur
+Participant ||--o{ Organisateur
+Participant ||--o{ Administrateur
+
+Artiste }o--o{ Evenement
+Technicien }o--o{ Evenement
+Regisseur }o--o{ Evenement
+Organisateur ||--o{ Evenement
+
+Evenement ||--o{ Ticket
+Evenement ||--o{ ReservationLieu
+Ticket }o--|| Participant
+
+Depense }o--|| Budget
+Gain }o--|| Budget
+RapportFinance }o--o{ Budget
+
+Feedback }o--|| Participant
+Feedback }o--|| Evenement
+
+@enduml

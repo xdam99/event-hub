@@ -1,0 +1,29 @@
+[
+  {
+    "_id": "dae2812efedd82b4fd99bf8d",
+    "nom": "Hard Rock Café",
+    "description": "d dzqdz dqdzqd zqdzq",
+    "date": "2025-11-21",
+    "heure": "13:54:14",
+    "capacite": 2952,
+    "idLieu": "c66013c758fb9ebc9a7e794b"
+  },
+  {
+    "_id": "feabe3e226e45cc1f7aa3ebc",
+    "nom": "ecletic Summer Festival",
+    "description": "Subito tempora anser quos absens crapula coepi temporibus. Atque est magnam aro harum conduco quia. Quaerat adsidue verus teneo aduro vitiosus comitatus laboriosam ciminatio clementia.",
+    "date": "2025-11-21",
+    "heure": "03:48:07",
+    "capacite": 2667,
+    "idLieu": "c87bcb7ded230b08dbb9fadf"
+  },
+  {
+    "_id": "73feb96e39113b99eedad838",
+    "nom": "Spectacle de theatre",
+    "description": "Conservo autus coruscus vilicus sonitus usus textus canonicus cubo. Denego stips antiquus peior thesaurus amicitia verto accusator contra. Tabesco verbum tenus spero desparatus adipisci claro.",
+    "date": "2025-11-22",
+    "heure": "16:28:48",
+    "capacite": 2578,
+    "idLieu": "c87bcb7ded230b08dbb9fae0"
+  }
+]

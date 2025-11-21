@@ -1,0 +1,45 @@
+@startuml EventHub-Reservation
+
+actor Utilisateur
+actor Participant
+participant "Interface EventHub" as UI
+participant "AuthController" as Auth
+participant "EventController" as EC
+participant "PaiementService" as Paiement
+participant "BilletService" as Billet
+participant "NotificationService" as Notif
+
+== Connexion ==
+Utilisateur -> UI : Accéder à EventHub
+Utilisateur -> UI : Entrer identifiants
+UI -> Auth : Vérifier identifiants
+Auth --> UI : Connexion réussie
+UI --> Participant : Accès autorisé
+
+== Recherche d'événement ==
+Participant -> UI : Rechercher événements
+UI -> EC : Obtenir événements selon filtres
+EC --> UI : Liste d'événements
+UI --> Participant : Affiche les résultats
+
+== Détails ==
+Participant -> UI : Voir détails d’un événement
+UI -> EC : Charger les informations d’un événement
+EC --> UI : Infos événement
+
+== Réservation ==
+Participant -> UI : Choisir billet
+UI -> Paiement : Initier paiement
+Paiement --> UI : Paiement validé
+
+== Génération de billet ==
+UI -> Billet : Générer billet + QR Code
+Billet --> UI : Billet PDF
+
+== Notification ==
+UI -> Notif : Envoyer confirmation
+Notif --> UI : Notification envoyée
+
+UI --> Participant : Billet disponible + confirmation reçue
+
+@enduml
