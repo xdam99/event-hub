@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "e6bdd2cb4bcbf6bed6aae0ab",
+    "idEvenement": "dae2812efedd82b4fd99bf8d",
+    "montantTotal": 93772.70705376368,
+    "depensesTotal": 81186.7035836201,
+    "gainsTotal": 123609.03838927516
+  },
+  {
+    "_id": "8cc948f019bd70ebf29d1ebc",
+    "idEvenement": "feabe3e226e45cc1f7aa3ebc",
+    "montantTotal": 60022.6505834435,
+    "depensesTotal": 40293.41579365171,
+    "gainsTotal": 209019.60467319234
+  },
+  {
+    "_id": "a8d6dd71946ddb0ef9ae6c56",
+    "idEvenement": "73feb96e39113b99eedad838",
+    "montantTotal": 139072.63454468938,
+    "depensesTotal": 37135.04784246928,
+    "gainsTotal": 44553.01643216374
+  }
+]

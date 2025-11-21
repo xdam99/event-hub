@@ -1,14 +1,14 @@
-import React from 'react'
+import React from "react";
 import Header from "./components/Header";
-
-
+import Evenements from "./components/Evenements";
 
 const App = () => {
   return (
     <>
       <Header />
-      <main style={{ padding: '2rem' }}>
+      <main>
         <h1>Bienvenue sur EventHub</h1>
+        <Evenements />
       </main>
     </>
   )

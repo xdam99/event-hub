@@ -1,0 +1,2 @@
+Bonjour, aujourd’hui nous vous présentons EventHub, notre projet fil rouge, ainsi que tout le travail réalisé autour de la modélisation Merise et de la méthodologie Agile Scrum. 
+Nous allons voir comment nous avons structuré le produit, organisé l’équipe, défini le MVP et préparé la livraison du premier sprint.

@@ -1,0 +1,258 @@
+@startuml EventHub
+
+' ACTEURS
+
+class Utilisateur {
+    +creerCompte(name, mail, mdp)
+    +seConnecter(mail, mdp)
+}
+
+abstract class Participant {
+    +gererReservation()
+    +donnerFeedback()
+}
+
+class Artiste {
+    -genreMusical
+    -nbJourEvenement
+}
+
+class Technicien {
+    -materiel
+}
+
+class Regisseur {
+    -locationMateriel
+}
+
+class Organisateur {
+    -partenaire
+}
+
+class Administrateur {
+    +gererGestionBudget()
+    +gererGestionStatistique()
+    +gererGestionCommunication()
+}
+
+' INTERFACES
+
+interface IgestionEvenement {
+    +creerEvenement(nameE, descE, dateE, lieuE)
+    +modifierEvenement(nameE, descE, dateE, lieuE)
+    +annulerEvenement(nameE, descE, dateE, lieuE)
+}
+
+interface IgestionReservation {
+    +creerReservationEvenement(evenement)
+    +annulerReservationEvenement(evenement)
+}
+
+interface IgestionBudget {
+    +creerRapportFinance(budget, gain, depense)
+}
+
+interface IgestionCommunication {
+    +communiquerEmail(email)
+    +communiquerSms(sms)
+}
+
+interface IgestionStatistique {
+    +creerRapportStatistique()
+    +gererCommunication()
+}
+
+interface IgestionProfil {
+    +modifierProfil(id, name, mail)
+    +supprimerProfil(id,name, mail)
+    +seDeconnecter()
+}
+
+' class implements interface
+
+class gestionEvenement implements IgestionEvenement {
+    +creerEvenement(nameE, descE, dateE, lieuE)
+    +modifierEvenement(nameE, descE, dateE, lieuE)
+    +annulerEvenement(nameE, descE, dateE, lieuE)
+}
+
+class gestionReservation implements IgestionReservation {
+    +creerReservationEvenement(evenement)
+    +annulerReservationEvenement(evenement)
+}
+
+class gestionBudget implements IgestionBudget {
+    +creerRapportFinance(budget, gain, depense)
+}
+
+class gestionCommunication implements IgestionCommunication {
+    +communiquerEmail(email)
+    +communiquerSms(sms)
+}
+
+class gestionStatistique implements IgestionStatistique {
+    +creerRapportStatistique()
+    +gererCommunication()
+}
+
+class gestionProfil implements IgestionProfil {
+    +modifierProfil(id, name, mail)
+    +supprimerProfil(id,name, mail)
+    +seDeconnecter()
+}
+
+' ENUMERATION
+
+enum lieu {
+    -adresse
+}
+
+enum analytics {
+    -infoAnalytics
+}
+
+enum partenaire {
+    -partenaire
+}
+
+' DOMAINES
+
+class evenement {
+    -nameE
+    -descE
+    -dateE
+    -lieuE
+}
+
+class ticket {
+    -idTicket
+    -qrCode
+    -evenement
+}
+
+class reservationLieu {
+    -idLieu
+    -lieu
+    -lieuPris : boolean
+    -dateLieuPris
+}
+
+class budget {
+    -depense
+    -gain
+}
+
+class depense {
+    -charge
+    -salaire
+    -reservationLieu
+}
+
+class gain {
+    -evenement
+}
+
+class rapportFinance {
+    +voirRapportFinance(rapportFinance)
+}
+
+class typeCommunication {
+    -email
+    -sms
+}
+
+class envoi {
+    +envoyerEmail(email, mail)
+    +envoyerSms(sms, num)
+}
+
+class reception {
+    +recevoirEmail(email, mail)
+    +recevoirSms(sms, num)
+}
+
+class feedback {
+    -idFeedback
+    -contenu
+    -date
+    -participant
+    -evenement
+}
+
+class rapportPerformance {
+    +voirRapportPerformance(evenement)
+}
+
+class rapportAnalytics {
+    +voirRapportAnalystics(analytics)
+}
+
+class profil {
+    -id
+    -name
+    -mail
+    -mdp
+}
+
+' RELATIONS
+
+Utilisateur -- Participant
+
+Participant <|-- Artiste
+Participant <|-- Technicien
+Participant <|-- Regisseur
+Participant <|-- Organisateur
+Participant <|-- Administrateur
+
+Participant ..> IgestionReservation
+Participant ..> IgestionProfil
+Participant -- profil
+
+profil -- gestionProfil
+
+Artiste "0..*" --o "0..*" evenement
+
+Technicien --o evenement
+
+Regisseur --o evenement
+
+Organisateur ..> IgestionEvenement
+
+Administrateur ..> IgestionBudget
+Administrateur ..> IgestionCommunication
+Administrateur ..> IgestionStatistique
+
+evenement "1" -- "0..*" gestionEvenement
+evenement "1..*" <-- "0..*" ticket
+evenement "0..*" <-- "1" reservationLieu
+
+reservationLieu -- gestionEvenement
+
+ticket -- gestionReservation
+ticket "0..*" -- "1" Participant
+
+budget "1..*" -- "1" gestionBudget
+depense --> budget
+gain --> budget
+rapportFinance "0..*" -- "1" gestionBudget
+rapportFinance --> budget
+rapportFinance --> depense
+rapportFinance --> gain
+
+typeCommunication "0..*" -- "1" gestionCommunication
+typeCommunication <-- envoi
+typeCommunication <-- reception
+typeCommunication --> Participant 
+
+gestionStatistique -- rapportAnalytics
+gestionStatistique -- rapportPerformance
+gestionStatistique -- rapportFinance
+gestionStatistique --> feedback
+
+rapportPerformance --> evenement
+
+feedback --> Participant
+feedback --> evenement
+
+
+@enduml

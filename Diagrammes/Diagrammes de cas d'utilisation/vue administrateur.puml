@@ -1,0 +1,61 @@
+@startuml EventHub-Administrateur
+
+title EventHub vue Administrateur
+
+left to right direction
+
+actor Utilisateur
+actor Participant
+actor Administrateur
+
+skinparam actorStyle awesome
+actor "<<System>>\nServiceNotification" as Notification
+actor "<<System>>\nReseauxSociaux" as Social
+actor "<<System>>\nOutilAnalytics" as Analytics
+
+rectangle "Système EventHub" {
+    package "Gestion des utilisateurs" {
+        usecase "S'inscrire / Se connecter" as UC1
+        usecase "Gérer profil et historique" as UC2
+        usecase "Recevoir des notifications" as UC3
+        usecase "Définir préférences / intérêts" as UC4
+    }
+
+    package "Administration" {
+        usecase "Tableau de bord admin" as UC17
+        usecase "Modérer utilisateurs / événements" as UC18
+        usecase "Gérer catégories" as UC19
+        usecase "Configurer plateforme" as UC20
+    }
+
+    package "Analyse et statistiques" {
+        usecase "Suivi en temps réel" as UC21
+        usecase "Dashboard organisateur" as UC22
+        usecase "Mesure performance événements" as UC23
+        usecase "Rapports avancés" as UC24
+    }
+}
+
+Utilisateur --> UC1
+
+Participant --|> Utilisateur
+Administrateur --|> Participant
+
+Participant --> UC2
+Participant --> UC3
+Participant --> UC4
+
+Administrateur --> UC17
+Administrateur --> UC18
+Administrateur --> UC19
+Administrateur --> UC20
+Administrateur --> UC21
+Administrateur --> UC24
+
+Notification --> UC3
+Social --> UC1
+Analytics --> UC24
+
+UC23 --> UC24 : <<include>>
+
+@enduml

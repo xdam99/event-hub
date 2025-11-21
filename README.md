@@ -20,10 +20,12 @@ Voici comment va se faire ma manière de travailler selon la méthode **Workflow
 * React
 * Webpack
 * Babel
+* Node.js (Express)
 * TypeScript
 * MySQL
 * MongoDB
 * PhpMyAdmin
+* API REST
 * Docker (+docker-compose)
 
 ## Installation pour la simulation

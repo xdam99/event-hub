@@ -1,0 +1,20 @@
+[
+  {
+    "_id": "c66013c758fb9ebc9a7e794b",
+    "nom": "Jacobs Inc Hall",
+    "adresse": "845 Kirlin Bridge",
+    "ville": "Meriden"
+  },
+  {
+    "_id": "c87bcb7ded230b08dbb9fadf",
+    "nom": "Bruen - MacGyver Hall",
+    "adresse": "315 Destini Locks",
+    "ville": "North Donavonside"
+  },
+  {
+    "_id": "c87bcb7ded230b08dbb9fae0",
+    "nom": "Kuphal - Kertzmann Hall",
+    "adresse": "15 McLaughlin Square",
+    "ville": "North Donavonside"
+  }
+]

@@ -1,13 +1,15 @@
+version: "3.9"
+
 services:
   client:
     build: ./client
     ports:
       - "3000:3000"
     environment:
-      - CHOKIDAR_USEPOLLING=true 
+      - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./client:/app
-      - /app/node_modules 
+      - /app/node_modules
     networks:
       - frontend
 
@@ -18,14 +20,14 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGO_URI=mongodb://root:1234@mongo:27017/admin
+      - MONGO_URI=mongodb://root:1234@mongo:27017/eventhub
     volumes:
       - ./server:/app
       - /app/node_modules
+      - ./server/data:/app/data
     networks:
       - backend
       - frontend
-      
 
   mongo:
     image: mongo:latest
@@ -34,9 +36,10 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: 1234
     volumes:
       - mongo_data:/data/db
+    ports:
+      - "27017:27017"
     networks:
       - backend
-
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

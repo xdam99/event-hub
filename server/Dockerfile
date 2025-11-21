@@ -7,6 +7,12 @@ RUN npm install
 
 COPY . .
 
+COPY init-mongo.sh /app/init-mongo.sh
+
 RUN npm run build
 
-CMD ["node", "dist/server.js"]
+RUN apk add --no-cache mongodb-tools
+
+RUN chmod +x /app/init-mongo.sh
+
+CMD ["sh", "init-mongo.sh"]

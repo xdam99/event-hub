@@ -1,0 +1,54 @@
+@startuml EventHub-Participant
+
+title EventHub vue Participant
+
+left to right direction
+
+actor Utilisateur
+actor Participant
+actor Participant
+
+skinparam actorStyle Hollow 
+actor "<<System>>\nMedia" as Media
+
+skinparam actorStyle awesome
+actor "<<System>>\nPasserellePaiement" as Paiement
+actor "<<System>>\nServiceNotification" as Notification
+actor "<<System>>\nReseauxSociaux" as Social
+
+rectangle "Système EventHub" {
+    package "Gestion des utilisateurs" {
+        usecase "S'inscrire / Se connecter" as UC1
+        usecase "Gérer profil et historique" as UC2
+        usecase "Recevoir des notifications" as UC3
+        usecase "Définir préférences / intérêts" as UC4
+    }
+
+    package "Découverte et réservation" {
+        usecase "Recherche multi-critères" as UC9
+        usecase "Recommandations personnalisées" as UC10
+        usecase "Réserver et payer" as UC11
+        usecase "Accéder à billets / QR code" as UC12
+    }
+}
+
+Utilisateur --> UC1
+
+Participant --|> Utilisateur
+
+Participant --> UC2
+Participant --> UC3
+Participant --> UC4
+
+Participant --> UC9
+Participant --> UC10
+Participant --> UC11
+Participant --> UC12
+
+Media --> UC9
+
+Paiement --> UC11
+Notification --> UC3
+Social --> UC1
+
+@enduml

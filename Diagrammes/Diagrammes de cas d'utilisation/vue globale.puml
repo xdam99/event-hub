@@ -1,0 +1,119 @@
+@startuml EventHub
+
+title EventHub vue globale
+
+left to right direction
+
+actor Utilisateur
+actor Participant
+actor Artiste
+actor Organisateur
+actor Administrateur
+
+skinparam actorStyle Hollow
+actor "<<System>>\nCollectivite" as Collectivite
+actor "<<System>>\nSponsor" as Sponsor
+actor "<<System>>\nMedia" as Media
+
+skinparam actorStyle awesome
+actor "<<System>>\nPasserellePaiement" as Paiement
+actor "<<System>>\nServiceNotification" as Notification
+actor "<<System>>\nServiceCartographie" as Cartographie
+actor "<<System>>\nReseauxSociaux" as Social
+actor "<<System>>\nOutilAnalytics" as Analytics
+
+rectangle "Système EventHub" {
+    package "Gestion des utilisateurs" {
+      usecase "S'inscrire / Se connecter" as UC1
+      usecase "Gérer profil et historique" as UC2
+      usecase "Recevoir des notifications" as UC3
+      usecase "Définir préférences / intérêts" as UC4
+    }
+
+    package "Gestion des événements" {
+      usecase "Créer / configurer un événement" as UC5
+      usecase "Gérer billets et tarifs" as UC6
+      usecase "Publier / promouvoir l’événement" as UC7
+      usecase "Suivre ventes et inscriptions" as UC8
+    }
+
+    package "Découverte et réservation" {
+      usecase "Recherche multi-critères" as UC9
+      usecase "Recommandations personnalisées" as UC10
+      usecase "Réserver et payer" as UC11
+      usecase "Accéder à billets / QR code" as UC12
+    }
+
+    package "Gestion des lieux" {
+      usecase "Référencer un lieu" as UC13
+      usecase "Gérer infos lieu" as UC14
+      usecase "Gérer disponibilités" as UC15
+      usecase "Afficher carte et accès" as UC16
+    }
+
+    package "Administration" {
+      usecase "Tableau de bord admin" as UC17
+      usecase "Modérer utilisateurs / événements" as UC18
+      usecase "Gérer catégories" as UC19
+      usecase "Configurer plateforme" as UC20
+    }
+
+    package "Analyse et statistiques" {
+      usecase "Suivi en temps réel" as UC21
+      usecase "Dashboard organisateur" as UC22
+      usecase "Mesure performance événements" as UC23
+      usecase "Rapports avancés" as UC24
+    }
+}
+
+Utilisateur --> UC1
+
+Participant --|> Utilisateur
+Organisateur --|> Participant
+Administrateur --|> Participant
+
+Participant --> UC2
+Participant --> UC3
+Participant --> UC4
+
+Participant --> UC9
+Participant --> UC10
+Participant --> UC11
+Participant --> UC12
+
+Organisateur --> UC5
+Organisateur --> UC6
+Organisateur --> UC7
+Organisateur --> UC8
+Organisateur --> UC13
+Organisateur --> UC14
+Organisateur --> UC15
+Organisateur --> UC16
+Organisateur --> UC22
+Organisateur --> UC23
+Organisateur --> UC24
+
+Administrateur --> UC17
+Administrateur --> UC18
+Administrateur --> UC19
+Administrateur --> UC20
+Administrateur --> UC21
+Administrateur --> UC24
+
+Collectivite --> UC13
+Sponsor --> UC7
+Media --> UC9
+
+Paiement --> UC11
+Notification --> UC3
+Cartographie --> UC16
+Social --> UC1
+Analytics --> UC24
+
+UC5 --> UC6 : <<include>>
+UC5 --> UC7 : <<extend>>
+UC11 --> UC12 : <<include>>
+UC8 --> UC22 : <<include>>
+UC23 --> UC24 : <<include>>
+
+@enduml

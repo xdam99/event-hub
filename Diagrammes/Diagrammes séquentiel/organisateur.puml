@@ -1,0 +1,44 @@
+@startuml EventHub-Organisateur
+
+actor Utilisateur
+actor Organisateur
+participant "Interface EventHub" as UI
+participant "AuthController" as Auth
+participant "EventController" as EC
+participant "LieuService" as Lieu
+participant "NotificationService" as Notif
+participant "AnalyticsService" as Analytics
+
+== Connexion ==
+Utilisateur -> UI : Accéder à EventHub
+Utilisateur -> UI : Entrer identifiants
+UI -> Auth : Vérifier identifiants
+Auth --> UI : Connexion réussie
+UI --> Organisateur : Accès autorisé
+
+== Création événement ==
+Organisateur -> UI : Créer nouvel événement
+UI -> EC : Initialiser événement vide
+EC --> UI : Formulaire événement
+
+Organisateur -> UI : Saisir titre, description, date
+Organisateur -> UI : Configurer billets et tarifs
+UI -> EC : Enregistrer infos événement + billets
+EC --> UI : Événement enregistré
+
+== Gestion lieu ==
+Organisateur -> UI : Sélectionner ou référencer lieu
+UI -> Lieu : Vérifier / créer lieu
+Lieu --> UI : Lieu confirmé
+
+== Publication ==
+Organisateur -> UI : Publier l'événement
+UI -> EC : Valider publication
+EC -> Analytics : Indexer événement pour stats
+EC -> Notif : Notifier abonnés
+Notif --> EC : Notification envoyée
+EC --> UI : Publication confirmée
+
+UI --> Organisateur : Événement publié avec succès
+
+@enduml
