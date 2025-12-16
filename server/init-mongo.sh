@@ -1,7 +1,6 @@
 #!/bin/sh
-set -e
 
-echo "Initialisation MongoDB"
+echo "⏳ Attente de MongoDB..."
 
 if [ ! -d "/app/data" ]; then
   echo "Le dossier /app/data n'existe pas !"

@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./components/Header";
-import Evenements from "./components/Evenements";
+import { EvenementsList } from "./components/Evenements";
 
 const App = () => {
   return (
@@ -8,7 +8,7 @@ const App = () => {
       <Header />
       <main>
         <h1>Bienvenue sur EventHub</h1>
-        <Evenements />
+        <EvenementsList />
       </main>
     </>
   )

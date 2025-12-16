@@ -6,6 +6,10 @@ COPY ./package.json ./package-lock.json ./
 
 RUN npm install
 
+# Install dev dependencies
+RUN npm install --save-dev ts-node-dev
+
+
 COPY . .
 
 RUN npm run build

@@ -3,26 +3,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const Event_1 = __importDefault(require("../models/Event"));
-const router = express_1.default.Router();
+// src/routes/events.ts
+const express_1 = require("express");
+const mysql_1 = __importDefault(require("../db/mysql"));
+const router = (0, express_1.Router)();
+// GET /events
 router.get('/', async (_req, res) => {
     try {
-        const events = await Event_1.default.find();
-        res.json(events);
+        const [rows] = await mysql_1.default.query(`
+      SELECT e.*, v.name AS venue_name, c.name AS category_name, u.name AS organizer_name
+      FROM events e
+      LEFT JOIN venues v ON e.venue_id = v.id
+      LEFT JOIN categories c ON e.category_id = c.id
+      LEFT JOIN users u ON e.organizer_id = u.id
+    `);
+        res.json(rows);
     }
     catch (err) {
-        res.status(500).json({ error: 'Erreur récupération événements' });
+        res.status(500).json({ error: err.message });
     }
 });
-router.post('/', async (req, res) => {
+// GET /events/:id
+router.get('/:id', async (req, res) => {
     try {
-        const event = new Event_1.default(req.body);
-        await event.save();
-        res.status(201).json(event);
+        const [rows] = await mysql_1.default.query('SELECT * FROM events WHERE id = ?', [req.params.id]);
+        res.json(rows[0] || null);
     }
     catch (err) {
-        res.status(400).json({ error: 'Erreur création événement' });
+        res.status(500).json({ error: err.message });
     }
 });
 exports.default = router;

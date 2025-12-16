@@ -1,101 +1,31 @@
-import express from "express";
-import cors from "cors";
-import { MongoClient, ObjectId } from "mongodb";
-
-const app = express();
-const port = 5000;
-
-// Middleware pour JSON
-app.use(express.json());
-
-// MongoDB connection
-const uri = "mongodb://root:1234@mongo:27017/eventhub?authSource=admin";
-const client = new MongoClient(uri);
-let db;
-
-async function connectDB() {
-  await client.connect();
-  db = client.db("eventhub");
-  console.log("✅ Connecté à MongoDB !");
-}
-connectDB().catch(console.error);
-
-
-app.use(cors({
-  origin: "http://localhost:3000"
-}));
-
-//////////////////////
-// ROUTES REST
-//////////////////////
-
-app.get("/", (req, res) => {
-  res.send("✅ Serveur OK");
-});
-
-app.get("/evenements", async (req, res) => {
-  try {
-    const evenements = await db.collection("evenements").find().toArray();
-    const lieux = await db.collection("lieux").find().toArray();
-
-    const lieuxMap = {};
-    lieux.forEach(l => {
-      lieuxMap[l._id.toString()] = l;
-    });
-
-    evenements.forEach(e => {
-      e.lieu = lieuxMap[e.idLieu];
-    });
-
-    res.json(evenements);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Erreur serveur" });
-  }
-});
-
-app.get("/evenements/:id", async (req, res) => {
-  try {
-    const evenement = await db
-      .collection("evenements")
-      .findOne({ _id: new ObjectId(req.params.id) });
-    res.json(evenement);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get("/evenements/:id/participants", async (req, res) => {
-  try {
-    const tickets = await db
-      .collection("tickets")
-      .find({ idEvenement: req.params.id })
-      .toArray();
-
-    const participantIds = tickets.map(t => t.idUtilisateur);
-    const participants = await db
-      .collection("utilisateurs")
-      .find({ _id: { $in: participantIds.map(id => new ObjectId(id)) } })
-      .toArray();
-
-    res.json(participants);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get("/evenements/:id/feedbacks", async (req, res) => {
-  try {
-    const feedbacks = await db
-      .collection("feedbacks")
-      .find({ idEvenement: req.params.id })
-      .toArray();
-    res.json(feedbacks);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.listen(port, () => {
-  console.log(`🚀 Serveur REST démarré sur http://localhost:${port}`);
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const users_1 = __importDefault(require("./routes/users"));
+const events_1 = __importDefault(require("./routes/events"));
+const analytics_1 = __importDefault(require("./routes/analytics"));
+const upload_1 = __importDefault(require("./routes/upload"));
+const app = (0, express_1.default)();
+const PORT = 5000;
+// Middleware
+app.use(express_1.default.json());
+app.use((0, cors_1.default)({ origin: 'http://localhost:3000' }));
+// Routes principales
+app.use('/users', users_1.default);
+app.use('/events', events_1.default);
+app.use('/analytics', analytics_1.default);
+// Upload
+app.use(upload_1.default);
+// Servir les fichiers uploadés
+app.use('/uploads', express_1.default.static("uploads"));
+app.use('upload', upload_1.default);
+// Route test
+app.get('/', (_req, res) => res.send('✅ Serveur OK'));
+// Lancer le serveur
+app.listen(PORT, () => {
+    console.log(`🚀 Serveur REST démarré sur http://localhost:${PORT}`);
 });

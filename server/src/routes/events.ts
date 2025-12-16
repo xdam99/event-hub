@@ -1,25 +1,13 @@
-import express from 'express';
-import Event from '../models/Event';
+// 🟦 BACK
+import { Router } from "express";
+import { EventController } from "../controllers/event.controller";
 
-const router = express.Router();
+const router = Router();
 
-router.get('/', async (_req, res) => {
-  try {
-    const events = await Event.find();
-    res.json(events);
-  } catch (err) {
-    res.status(500).json({ error: 'Erreur récupération événements' });
-  }
-});
-
-router.post('/', async (req, res) => {
-  try {
-    const event = new Event(req.body);
-    await event.save();
-    res.status(201).json(event);
-  } catch (err) {
-    res.status(400).json({ error: 'Erreur création événement' });
-  }
-});
+router.get("/", EventController.getAll);
+router.get("/:id", EventController.getById);
+router.post("/", EventController.create);
+router.put("/:id", EventController.update);
+router.delete("/:id", EventController.delete);
 
 export default router;

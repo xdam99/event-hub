@@ -1,11 +1,18 @@
-import mongoose from 'mongoose';
+export class Event {
+    constructor(
+        public id: number | null,
+        public title: string,
+        public description: string | null,
+        public start_date: string,
+        public end_date: string,
+        public venue_id: number,
+        public category_id: number,
+        public organizer_id: number,
+        public image_url: string | null,
 
-const eventSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: String,
-  date: Date,
-});
+        public venue_name?: string,
+        public category_name?: string,
+        public organizer_name?: string
+    ) {}
+}
 
-const Event = mongoose.model('Event', eventSchema);
-
-export default Event;

@@ -1,13 +1,16 @@
-import mongoose from "mongoose";
+import { MongoClient, Db } from 'mongodb';
 
-const MONGO_URI = process.env.MONGO_URI || "mongodb://root:1234@mongo:27017/admin";
+const mongoUri = "mongodb://root:1234@mongo:27017/eventhub?authSource=admin";
+const mongoClient = new MongoClient(mongoUri);
+let mongoDB: Db;
 
-export const connectMongo = async () => {
-  try {
-    await mongoose.connect(MONGO_URI);
+export async function connectMongo() {
+  if (!mongoDB) {
+    await mongoClient.connect();
+    mongoDB = mongoClient.db("eventhub");
     console.log("✅ Connecté à MongoDB");
-  } catch (error) {
-    console.error("❌ Erreur connexion MongoDB :", error);
-    process.exit(1);
   }
-};
+  return mongoDB;
+}
+
+export { mongoClient, mongoDB };
