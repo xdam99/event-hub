@@ -7,7 +7,6 @@ const router = express.Router();
 
 const uploadsDir = path.join(process.cwd(), "uploads");
 
-// sécurité : on crée le dossier s’il n’existe pas
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }

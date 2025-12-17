@@ -1,4 +1,4 @@
-// 🟦 BACK
+
 import bcrypt from "bcrypt";
 import mysqlPool from "../db/mysql";
 import { IUserService } from "./IUserService";

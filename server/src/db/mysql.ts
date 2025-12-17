@@ -13,7 +13,7 @@ export const db = mysql.createPool({
 
 export default db;
 
-// Requête SQL pour la flemme --------------------------------------------------------------------------------------------------------------------------
+// Requête SQL pour la flemme au cas où je perds la bdd --------------------------------------------------------------------------------------------------------------------------
 
 // CREATE TABLE users (
 //   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,6 +41,10 @@ export default db;
 //   description TEXT,
 //   start_date DATETIME NOT NULL,
 //   end_date DATETIME NOT NULL,
+//   start_time TIME NOT NULL,
+//   end_time TIME NOT NULL,
+//   image_url VARCHAR(255),
+//   color VARCHAR(255),
 //   venue_id INT NOT NULL,
 //   category_id INT NOT NULL,
 //   organizer_id INT NOT NULL,
@@ -78,12 +82,6 @@ export default db;
 //   FOREIGN KEY (user_id) REFERENCES users(id)
 // );
 
-// ALTER TABLE events
-// ADD COLUMN image_url VARCHAR(255) DEFAULT NULL;
-
-
-
-
 // FAIRE EN 2 FOIS -------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -106,13 +104,13 @@ export default db;
 // ('Claire', 'claire@example.com', 'organizer'),
 // ('Alice', 'alice@example.com', 'organizer');
 
-// INSERT INTO events (title, description, start_date, end_date, venue_id, category_id, organizer_id)
+// INSERT INTO events (title, description, start_date, end_date, start_time, end_time, image_url, color, venue_id, category_id, organizer_id)
 // VALUES
-// ('Concert Electro Night', 'Une nuit électro avec des DJs internationaux', '2025-03-15 20:00:00', '2025-03-16 02:00:00', 1, 1, 1),
-// ('Conférence React & TypeScript', 'Les meilleures pratiques React TS en 2025', '2025-04-10 09:00:00', '2025-04-10 18:00:00', 2, 2, 2),
-// ('Exposition Art Moderne', 'Artistes contemporains européens', '2025-05-01 10:00:00', '2025-05-30 19:00:00', 3, 3, 3),
-// ('Festival Jazz', 'Jazz en live avec des musiciens internationaux', '2025-06-20 18:00:00', '2025-06-21 02:00:00', 4, 1, 1),
-// ('Workshop Node.js', 'Atelier pratique Node.js et backend', '2025-07-05 10:00:00', '2025-07-05 16:00:00', 2, 2, 2),
-// ('Salon du Livre', 'Rencontre avec des auteurs et conférences', '2025-08-12 09:00:00', '2025-08-12 18:00:00', 5, 3, 3);
+// ('Concert Electro Night', 'Une nuit électro avec des DJs internationaux', '2025-03-15 20:00:00', '2025-03-16 02:00:00', '20:00:00', '02:00:00', 'telechargement.jpg', '#FF0000',  1, 1, 1),
+// ('Conférence React & TypeScript', 'Les meilleures pratiques React TS en 2025', '2025-04-10', '2025-04-10', '10:00:00', '12:00:00', 'telechargement_1.jpg', '#00FF00', 2, 2, 2),
+// ('Exposition Art Moderne', 'Artistes contemporains européens', '2025-05-01', '2025-05-30', '10:00:00', '18:00:00', 'telechargement_2.jpg', '#0000FF', 3, 3, 3),
+// ('Festival Jazz', 'Jazz en live avec des musiciens internationaux', '2025-06-20', '2025-06-21', '20:00:00', '02:00:00', 'telechargement_3.jpg', '#FFFF00', 4, 1, 1),
+// ('Workshop Node.js', 'Atelier pratique Node.js et backend', '2025-07-05', '2025-07-05', '10:00:00', '12:00:00', 'telechargement_4.jpg', '#FF00FF', 2, 2, 2),
+// ('Salon du Livre', 'Rencontre avec des auteurs et conférences', '2025-08-12', '2025-08-12', '14:00:00', '16:00:00', 'telechargement_5.jpg', '#00FFFF', 5, 3, 3);
 
 // COMMIT;
