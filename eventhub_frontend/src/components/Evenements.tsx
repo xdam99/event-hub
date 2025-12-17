@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import { getEvents } from "../api/api";
-import { Event } from "../api/types";
+import type { Event } from "../api/types";
 import "./Evenements.css";
 
 export const EvenementsList: React.FC = () => {
