@@ -1,5 +1,6 @@
 services:
   client:
+    container_name: client
     build: 
       context: ./client
       dockerfile: Dockerfile.dev
@@ -7,8 +8,9 @@ services:
       - "3000:3000"
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     volumes:
-      - ./client:/app                # code source du front
+      - ./client:/app:cached             
       - /app/node_modules
     networks:
       - frontend
@@ -23,11 +25,12 @@ services:
       - mysql
       - mongo
     environment:
-      NODE_ENV: development
+      - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - ./server/.env
     volumes:
-      - ./server:/app                # code source du back
-      - server_data:/app/data      # dossier de données persistantes
-      - server_uploads:/app/uploads # dossier uploads persistants
+      - ./server:/app                
+      - ./server/uploads:/app/uploads 
       - /app/node_modules
     networks:
       - backend

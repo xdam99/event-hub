@@ -1,36 +1,15 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-// src/routes/events.ts
 const express_1 = require("express");
-const mysql_1 = __importDefault(require("../db/mysql"));
+const event_controller_1 = require("../controllers/event.controller");
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const role_middleware_1 = require("../middlewares/role.middleware");
 const router = (0, express_1.Router)();
-// GET /events
-router.get('/', async (_req, res) => {
-    try {
-        const [rows] = await mysql_1.default.query(`
-      SELECT e.*, v.name AS venue_name, c.name AS category_name, u.name AS organizer_name
-      FROM events e
-      LEFT JOIN venues v ON e.venue_id = v.id
-      LEFT JOIN categories c ON e.category_id = c.id
-      LEFT JOIN users u ON e.organizer_id = u.id
-    `);
-        res.json(rows);
-    }
-    catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-// GET /events/:id
-router.get('/:id', async (req, res) => {
-    try {
-        const [rows] = await mysql_1.default.query('SELECT * FROM events WHERE id = ?', [req.params.id]);
-        res.json(rows[0] || null);
-    }
-    catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+// ✅ PUBLIC : tout le monde peut voir
+router.get("/", event_controller_1.EventController.getAll);
+router.get("/:id", event_controller_1.EventController.getById);
+// 🔒 PROTÉGÉ : il faut être connecté
+router.post("/", auth_middleware_1.authenticate, (0, role_middleware_1.authorizeRoles)(["organizer", "admin"]), event_controller_1.EventController.create);
+router.put("/:id", auth_middleware_1.authenticate, (0, role_middleware_1.authorizeRoles)(["organizer", "admin"]), event_controller_1.EventController.update);
+router.delete("/:id", auth_middleware_1.authenticate, (0, role_middleware_1.authorizeRoles)(["admin"]), event_controller_1.EventController.delete);
 exports.default = router;

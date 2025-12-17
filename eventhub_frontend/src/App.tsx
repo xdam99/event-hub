@@ -2,7 +2,6 @@ import Header from "./components/Header";
 import Banner from "./components/Banner";
 import { EvenementsList } from "./components/Evenements";
 import { Login } from "./pages/Login";
-import { useAuth } from "./context/AuthContext";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -17,12 +16,10 @@ const App = () => {
       <Banner />
       <main>
         <Routes>
-          {/* ✅ PUBLIC */}
           <Route path="/" element={<EvenementsList />} />
           <Route path="/events" element={<EvenementsList />} />
           <Route path="/login" element={<Login />} />
 
-          {/* 🔒 PROTÉGÉ */}
           <Route
             path="/events/new"
             element={

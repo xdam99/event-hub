@@ -24,9 +24,12 @@ export class EventController {
         req.body.description,
         req.body.start_date,
         req.body.end_date,
+        req.body.start_time,
+        req.body.end_time,
         req.body.venue_id,
         req.body.category_id,
         req.body.organizer_id,
+        req.body.color,
         req.body.image_url ?? null
         );
 
@@ -41,9 +44,12 @@ export class EventController {
         req.body.description,
         req.body.start_date,
         req.body.end_date,
+        req.body.start_time,
+        req.body.end_time,
         req.body.venue_id,
         req.body.category_id,
         req.body.organizer_id,
+        req.body.color,
         req.body.image_url ?? null
         );
 

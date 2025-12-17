@@ -8,6 +8,8 @@ export class EventService implements IEventService {
         const [rows]: any = await mysqlPool.query(`
         SELECT
             e.*,
+            DATE_FORMAT(e.start_time, '%H:%i:%s') AS start_time,
+            DATE_FORMAT(e.end_time, '%H:%i:%s')   AS end_time,
             v.name AS venue_name,
             c.name AS category_name,
             u.name AS organizer_name
@@ -25,10 +27,13 @@ export class EventService implements IEventService {
             r.description,
             r.start_date,
             r.end_date,
+            r.start_time,
+            r.end_time,
             r.venue_id,
             r.category_id,
             r.organizer_id,
             r.image_url,
+            r.color,
             r.venue_name,
             r.category_name,
             r.organizer_name
@@ -41,6 +46,8 @@ export class EventService implements IEventService {
         `
         SELECT
             e.*,
+            DATE_FORMAT(e.start_time, '%H:%i:%s') AS start_time,
+            DATE_FORMAT(e.end_time, '%H:%i:%s')   AS end_time,
             v.name AS venue_name,
             c.name AS category_name,
             u.name AS organizer_name
@@ -62,10 +69,13 @@ export class EventService implements IEventService {
         r.description,
         r.start_date,
         r.end_date,
+        r.start_time,
+        r.end_time,
         r.venue_id,
         r.category_id,
         r.organizer_id,
         r.image_url,
+        r.color,
         r.venue_name,
         r.category_name,
         r.organizer_name
@@ -76,7 +86,7 @@ export class EventService implements IEventService {
         const [result]: any = await mysqlPool.query(
         `
         INSERT INTO events
-        (title, description, start_date, end_date, venue_id, category_id, organizer_id, image_url)
+        (title, description, start_date, end_date, start_time, end_time, venue_id, category_id, organizer_id, image_url, color)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         `,
         [
@@ -84,10 +94,14 @@ export class EventService implements IEventService {
             event.description,
             event.start_date,
             event.end_date,
+            event.start_time,
+            event.end_time,
             event.venue_id,
             event.category_id,
             event.organizer_id,
             event.image_url,
+            event.color
+
         ]
         );
 
@@ -102,10 +116,13 @@ export class EventService implements IEventService {
             description = ?,
             start_date = ?,
             end_date = ?,
+            start_time = ?,
+            end_time = ?,
             venue_id = ?,
             category_id = ?,
             organizer_id = ?,
-            image_url = ?
+            image_url = ?,
+            color = ?
         WHERE id = ?
         `,
         [
@@ -113,10 +130,13 @@ export class EventService implements IEventService {
             event.description,
             event.start_date,
             event.end_date,
+            event.start_time,
+            event.end_time,
             event.venue_id,
             event.category_id,
             event.organizer_id,
             event.image_url,
+            event.color,
             id,
         ]
         );

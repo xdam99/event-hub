@@ -6,6 +6,8 @@
   --primary-color: white;
   --secondary-color: #660708;
   --background-color: #161a1d;
+  --font-color-white: white;
+  --font-color-black: black;
   --font-title: 'Bungee Regular', sans-serif;
   --font-family-main: 'Roboto Condensed', sans-serif;
 }
