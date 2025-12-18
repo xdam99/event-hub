@@ -1,0 +1,109 @@
+@use "../assets/styles/variables" as *;
+
+.events {
+    width: 100%;
+
+    .events-title {
+        font-size: 40px;
+        text-align: center;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    .events-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 50px 30px;
+        width: 80%;
+    }
+
+    .events-card {
+        display: flex;
+        flex-direction: column;
+        width: 350px;
+        height: 500px;
+        border-radius: 24px;
+        transition: height 0.3s, transform 0.3s, box-shadow 0.3s ease-in-out;
+
+        &:hover {
+            transform: scale(1.01);
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .events-card-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-top-left-radius: 14px;
+            border-top-right-radius: 14px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .event-card-content {
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+
+            .event-card-title {
+                font-size: 30px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: var(--primary-color);
+            }
+
+            .event-card-description {
+                font-size: 18px;
+                color: var(--primary-color);
+            }
+
+            .event-card-date {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: auto;
+                border-radius: 10px;
+                padding: 5px;
+            
+                span {
+                    font-size: 18px;
+                    text-align: center;
+                    width: 50%;
+                    color: $font-color-white;
+                }
+                .event-card-date-same-day{
+                    width: auto;
+                    display: inline-flex;
+                    white-space: nowrap;
+                }
+                .event-card-date-different-days{
+                    &:last-child {
+                        border-left: 1px solid white;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.read-more {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 6px;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 600;
+    color: #2563eb;
+
+    &:hover {
+        opacity: 0.85;
+    }
+}
+

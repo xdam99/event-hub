@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
 import { getEvents } from "../api/api";
 import type { Event } from "../api/types";
-import "./Evenements.css";
+
+import { ReadMoreText } from "./ReadMoreText";
+
+import "./Evenements.scss";
 
 export const EvenementsList: React.FC = () => {
   const { token } = useAuth();
@@ -29,43 +32,84 @@ export const EvenementsList: React.FC = () => {
 
   if (events.length === 0) return <p>Aucun événement</p>;
 
-  const normalizeDate = (d?: string | null) => (d ? d.slice(0, 10) : "");
-  const normalizeTime = (t?: string | null) => {
-    if (!t) return "00:00:00";
-    return t.length === 5 ? `${t}:00` : t;
-  };
+  const normalizeDate = (d?: string | null) => (d ? d.slice(0, 10) : ""); 
+
+const formatDateFR = (d?: string | null) => {
+  if (!d) return "";
+  const iso = d.slice(0, 10);
+  const [y, m, day] = iso.split("-");
+  return `${day}/${m}/${y}`;
+};
+
+const formatTimeHM = (t?: string | null) => {
+  if (!t) return "";
+  return t.slice(0, 5);
+};
 
   return (
-    <section className="events">
-      <h2 className="events-title">Les événements actuels</h2>
-      <div className="event-list">
+    <section className="events pt-10 pb-10">
+      <h2 className="events-title mb-10">Les événements actuels</h2>
+      <div className="events-list m-auto">
         {Array.isArray(events) && events.map(e => {
-          const gradientColor = e.color
-            ? e.color
-            : "#FFFFFF30";
 
-          const startIso = `${normalizeDate(e.start_date)}T${normalizeTime(e.start_time)}`;
-          const endIso = `${normalizeDate(e.end_date)}T${normalizeTime(e.end_time)}`;
+          const startDateStr = formatDateFR(e.start_date);
+          const endDateStr = formatDateFR(e.end_date);
 
-          const start = new Date(startIso);
-          const end = new Date(endIso);
+          const startTimeStr = formatTimeHM(e.start_time);
+          const endTimeStr = formatTimeHM(e.end_time);
+
+          const sameDay = normalizeDate(e.start_date) === normalizeDate(e.end_date);
+
+
 
           return (
             <div 
-              className="event-card" 
+              className="events-card pb-10" 
               key={e.id}
               style={{
-                backgroundImage: `linear-gradient(to bottom, #00000050 0%, ${gradientColor}AA 100%), url(${e.image_url ? `http://localhost:5000/uploads/${e.image_url}` : "http://localhost:5000/uploads/no-image.svg"})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat"
+                boxShadow: e.color ? `0 10px 10px ${e.color}50` : "rgba(0, 0, 0, 0.2)"
               }}
             >
+              <div className="events-card-image">
+                <img 
+                  src={
+                    e.image_url
+                    ? `http://localhost:5000/uploads/${e.image_url}`
+                    : "http://localhost:5000/uploads/no-image.svg"
+                  } 
+                  alt={e.title} 
+                />
+              </div>
               <div className="event-card-content">
                 <h3 className="event-card-title">{e.title}</h3>
-                <p className="event-card-description">{e.description}</p>
-                <p className="event-card-date">
-                  {start.toLocaleDateString("fr-FR")} - {end.toLocaleDateString("fr-FR")}</p>
+                <ReadMoreText
+                  text={e.description ?? ""}
+                  maxChars={100}
+                  className="event-card-description"
+                />
+                <div className="event-card-date" style={{
+                  backgroundColor: e.color ? `${e.color}` : "transparent"
+                }}>
+                  {
+                    sameDay ? (
+                      <span className="event-card-date-same-day">
+
+                        {startDateStr} de {startTimeStr && ` ${startTimeStr}`} à {endTimeStr && ` ${endTimeStr}`}
+                      </span>
+                    ) : (
+                      <>
+                        <span className="event-card-date-different-days">
+                          {startDateStr}
+                          {startTimeStr && ` ${startTimeStr}`}
+                        </span>
+                        <span className="event-card-date-different-days">
+                          {endDateStr}
+                          {endTimeStr && ` ${endTimeStr}`}
+                        </span>
+                      </>
+                    )
+                  }
+                </div>
               </div>
             </div>
           )

@@ -1,8 +1,8 @@
 services:
   client:
-    container_name: client
+    container_name: eventhub_frontend
     build: 
-      context: ./client
+      context: ./eventhub_frontend
       dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
@@ -10,7 +10,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
     volumes:
-      - ./client:/app:cached             
+      - ./eventhub_frontend:/app:cached             
       - /app/node_modules
     networks:
       - frontend

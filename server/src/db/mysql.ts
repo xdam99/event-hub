@@ -85,32 +85,130 @@ export default db;
 // FAIRE EN 2 FOIS -------------------------------------------------------------------------------------------------------------------------------
 
 
-// START TRANSACTION;
-
-// INSERT INTO venues (name, address, capacity) VALUES
-// ('Zénith Paris', '8 Boulevard de la Villette, Paris', 5000),
-// ('Palais des Congrès', '2 Place de la Porte Maillot, Paris', 1000),
-// ('La Sucrière', '49-50 Quai Rambaud, Lyon', 300),
-// ('Théâtre du Châtelet', '1 Place du Châtelet, Paris', 2000),
-// ('Centre Pompidou', 'Place Georges-Pompidou, Paris', 800);
-
-// INSERT INTO categories (name) VALUES
-// ('Musique'),
-// ('Technologie'),
-// ('Art');
-
-// INSERT INTO users (name, email, role) VALUES
-// ('Bob', 'bob@example.com', 'organizer'),
-// ('Claire', 'claire@example.com', 'organizer'),
-// ('Alice', 'alice@example.com', 'organizer');
-
-// INSERT INTO events (title, description, start_date, end_date, start_time, end_time, image_url, color, venue_id, category_id, organizer_id)
+// INSERT INTO events
+// (
+//   title,
+//   description,
+//   start_date,
+//   end_date,
+//   start_time,
+//   end_time,
+//   venue_id,
+//   category_id,
+//   organizer_id,
+//   image_url,
+//   color
+// )
 // VALUES
-// ('Concert Electro Night', 'Une nuit électro avec des DJs internationaux', '2025-03-15 20:00:00', '2025-03-16 02:00:00', '20:00:00', '02:00:00', 'telechargement.jpg', '#FF0000',  1, 1, 1),
-// ('Conférence React & TypeScript', 'Les meilleures pratiques React TS en 2025', '2025-04-10', '2025-04-10', '10:00:00', '12:00:00', 'telechargement_1.jpg', '#00FF00', 2, 2, 2),
-// ('Exposition Art Moderne', 'Artistes contemporains européens', '2025-05-01', '2025-05-30', '10:00:00', '18:00:00', 'telechargement_2.jpg', '#0000FF', 3, 3, 3),
-// ('Festival Jazz', 'Jazz en live avec des musiciens internationaux', '2025-06-20', '2025-06-21', '20:00:00', '02:00:00', 'telechargement_3.jpg', '#FFFF00', 4, 1, 1),
-// ('Workshop Node.js', 'Atelier pratique Node.js et backend', '2025-07-05', '2025-07-05', '10:00:00', '12:00:00', 'telechargement_4.jpg', '#FF00FF', 2, 2, 2),
-// ('Salon du Livre', 'Rencontre avec des auteurs et conférences', '2025-08-12', '2025-08-12', '14:00:00', '16:00:00', 'telechargement_5.jpg', '#00FFFF', 5, 3, 3);
 
-// COMMIT;
+// (
+//   'Festival Électro Lumière',
+//   'Une immersion nocturne au cœur de la musique électronique avec des DJs internationaux, une scénographie lumineuse spectaculaire et une ambiance immersive pensée pour vibrer ensemble jusqu’au bout de la nuit.',
+//   '2025-03-15',
+//   '2025-03-15',
+//   '20:00',
+//   '02:00',
+//   1,
+//   1,
+//   1,
+//   'telechargement.jpg',
+//   '#7C3AED'
+// ),
+
+// (
+//   'Conférence Web & Innovation',
+//   'Une journée dédiée aux professionnels du web pour explorer les nouvelles pratiques, les enjeux technologiques actuels et les innovations numériques à travers des conférences et échanges concrets.',
+//   '2025-04-10',
+//   '2025-04-10',
+//   '09:00',
+//   '18:00',
+//   2,
+//   2,
+//   2,
+//   'telechargement_1.jpg',
+//   '#2563EB'
+// ),
+
+// (
+//   'Exposition Art Contemporain',
+//   'Une exposition rassemblant des artistes contemporains aux univers variés. Peintures, sculptures et œuvres numériques dialoguent dans un parcours visuel et émotionnel accessible à tous.',
+//   '2025-05-01',
+//   '2025-05-30',
+//   '10:00',
+//   '19:00',
+//   3,
+//   3,
+//   3,
+//   'telechargement_2.jpg',
+//   '#16A34A'
+// ),
+
+// (
+//   'Jazz & Soul Night',
+//   'Une soirée musicale intimiste mêlant jazz et soul dans une atmosphère chaleureuse. Des musiciens talentueux revisitent les classiques et proposent des compositionsP;compositions originales en live.',
+//   '2025-06-20',
+//   '2025-06-20',
+//   '19:00',
+//   '23:30',
+//   4,
+//   1,
+//   1,
+//   'telechargement_3.jpg',
+//   '#F59E0B'
+// ),
+
+// (
+//   'Workshop Node.js Avancé',
+//   'Un atelier intensif destiné aux développeurs souhaitant approfondir Node.js. Architecture, performance et bonnes pratiques sont abordées à travers des exercices concrets et applicables.',
+//   '2025-07-05',
+//   '2025-07-05',
+//   '10:00',
+//   '16:00',
+//   2,
+//   2,
+//   2,
+//   'telechargement_4.jpg',
+//   '#DC2626'
+// ),
+
+// (
+//   'Salon du Livre Indépendant',
+//   'Un événement dédié aux auteurs et éditeurs indépendants. Rencontres, dédicaces et conférences rythment la journée pour promouvoir la diversité littéraire et la découverte de nouvelles voix.',
+//   '2025-08-12',
+//   '2025-08-12',
+//   '09:00',
+//   '18:00',
+//   5,
+//   3,
+//   3,
+//   'telechargement_5.jpg',
+//   '#0EA5E9'
+// ),
+
+// (
+//   'Rencontre Startups & Investisseurs',
+//   'Une rencontre professionnelle favorisant les échanges entre startups innovantes et investisseurs. Pitchs, networking et discussions stratégiques pour créer de nouvelles opportunités.',
+//   '2025-09-18',
+//   '2025-09-18',
+//   '14:00',
+//   '20:00',
+//   2,
+//   2,
+//   2,
+//   'telechargement_6.jpg',
+//   '#9333EA'
+// ),
+
+// (
+//   'Cinéma Plein Air',
+//   'Une projection en plein air dans une ambiance conviviale. Le public profite d’un film sélectionné avec soin, accompagné d’animations et de restauration pour une soirée culturelle accessible.',
+//   '2025-07-25',
+//   '2025-07-25',
+//   '21:00',
+//   '23:30',
+//   1,
+//   3,
+//   1,
+//   'telechargement_7.jpg',
+//   '#22C55E'
+// );
