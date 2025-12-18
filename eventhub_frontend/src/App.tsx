@@ -1,21 +1,16 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import { Layout } from "./modules/app/components/Layout";
-import { useAuth } from "./context/AuthContext";
+import { Login } from "./modules/login/components/Login"
+import { AppWrapper } from "./modules/app/components/AppWrapper"
+import { Layout } from "./modules/app/components/Layout"
 
-const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const {User} = useAuth();
-  return User ? children : <Navigate to="/login" replace />;
-};
+function App() {
+	return (
+		<AppWrapper>
+			<Layout>
+				<h1>Hello World</h1>
+				<Login/>
+			</Layout>
+		</AppWrapper>
+	)
+}
 
-const App = () => {
-  return (
-    <>
-      <Layout>
-        
-      </Layout>
-    </>
-  );
-};
-
-export default App;
+export default App

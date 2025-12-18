@@ -1,19 +1,20 @@
 import type { Dependencies } from "../store/dependencies";
-import { type AppStore, createStore } from "../store/store";
+import { createStore, type AppStore } from "../store/store";
 
 export class App {
     public dependencies: Dependencies;
     public store: AppStore;
 
-    constructor(){
+    constructor() {
         this.dependencies = this.setupDependencies();
-        this.store = createStore({ depedencies: this.dependencies });
+        this.store = createStore({ dependencies: this.dependencies })
     }
+
     setupDependencies(): Dependencies {
         return {}
     }
+
 }
 
 export const app = new App();
-
 

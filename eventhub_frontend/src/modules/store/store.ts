@@ -1,19 +1,16 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import useDipatch from "react-redux";
+import {useDispatch} from "react-redux";
 import type { Dependencies } from "./dependencies";
 
-const reducers = combineReducers({});
+const appReducer = (state = { ready: true}) => state
 
-export type AppStore = ReturnType<typeof createStore>;
-export type AppState = ReturnType<typeof reducers>;
-
-export type AppDispatch = AppStore["dispatch"];
-export type AppGetState = AppStore["getState"];
-
+const reducers = combineReducers({
+    app: appReducer
+})
 
 
 export const createStore = (config: {
-    depedencies: Dependencies
+    dependencies: Dependencies
 }) => {
     const store = configureStore({
         reducer: reducers,
@@ -21,12 +18,18 @@ export const createStore = (config: {
         middleware: (getDefaultMiddleware) => {
             return getDefaultMiddleware({
                 thunk: {
-                    extraArgument: config.depedencies
+                    extraArgument: config.dependencies
                 }
             })
         }
     })
-    return store
+    return store;
 }
 
-export const useAppDispatch = () => useDipatch<AppDispatch>();
+export type AppStore = ReturnType<typeof createStore>;
+export type AppState = ReturnType<typeof reducers>;
+export type AppDispatch = AppStore["dispatch"];
+export type AppGetState = AppStore["getState"];
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+
