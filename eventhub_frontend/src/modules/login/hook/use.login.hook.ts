@@ -1,17 +1,19 @@
-import type { User } from "../../model/user";
+import { useSelector } from "react-redux";
+import type { AppState } from "../../store/store";
+import { useAppDispatch } from "../../store/store";
+import { loginRequest } from "../../store/auth/auth.slice";
 
 export const useLogin = () => {
-    function login(user: User) {
-        const email = user.email?.trim();
-        const password = user.password ?? "";
+  const dispatch = useAppDispatch();
+  const { user, error } = useSelector((state: AppState) => state.auth);
 
-        if (!email || !password) {
-        throw new Error("Email et mot de passe requis");
-        }
-        return user;
-    }
+  const login = (email: string, password: string) => {
+    dispatch(loginRequest({ email, password }));
+  };
 
-    return {
-        login,
-    };
+  return {
+    user,
+    error,
+    login,
+  };
 };

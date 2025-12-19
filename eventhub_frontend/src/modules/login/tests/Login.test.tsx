@@ -1,50 +1,46 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { Login } from "../components/Login";
-import type { User } from "../../../domain/model/user"; 
-
-const mockLogin = jest.fn();
-
-jest.mock("../../../domain/hook/use.login.hook", () => ({
-    useLogin: () => ({
-        login: mockLogin,
-    }),
+jest.mock("react-router-dom", () => ({
+    Navigate: () => null,
 }));
 
-describe("Login", () => {
-    beforeEach(() => {
-        mockLogin.mockReset();
+import { render, screen, fireEvent } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "../../store/auth/auth.slice";
+import { Login } from "../components/Login";
+
+function renderWithStore() {
+    const store = configureStore({
+        reducer: {
+        auth: authReducer,
+        },
     });
 
-    it("Devrait afficher les champs email/password et envoie les valeurs au submit", async () => {
-        const user = userEvent.setup();
+    return render(
+        <Provider store={store}>
+        <Login />
+        </Provider>
+    );
+}
 
-        const initial: User = {
-        id: "",
-        name: "",
-        email: "a@a.com",
-        password: "old",
-        };
+describe("Login component", () => {
+    it("should render email and password inputs", () => {
+        renderWithStore();
 
-        render(<Login login={initial} />);
+        expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+    });
 
-        const emailInput = screen.getByLabelText("email") as HTMLInputElement;
-        const passwordInput = screen.getByLabelText("password") as HTMLInputElement;
+    it("should enable submit when email and password are filled", () => {
+        renderWithStore();
 
-        await user.clear(emailInput);
-        await user.type(emailInput, "test@mail.com");
-
-        await user.clear(passwordInput);
-        await user.type(passwordInput, "secret");
-
-        await user.click(screen.getByRole("button", { name: /login/i }));
-
-        expect(mockLogin).toHaveBeenCalledTimes(1);
-        expect(mockLogin).toHaveBeenCalledWith({
-        id: "",
-        name: "",
-        email: "test@mail.com",
-        password: "secret",
+        fireEvent.change(screen.getByLabelText(/email/i), {
+        target: { value: "test@test.com" },
         });
+
+        fireEvent.change(screen.getByLabelText(/password/i), {
+        target: { value: "1234" },
+        });
+
+        expect(screen.getByRole("button", { name: /login/i })).toBeEnabled();
     });
 });

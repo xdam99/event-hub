@@ -10,7 +10,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({
                     EventHub
                 </Typography>
             </Toolbar>
-            <Container maxWidth="lg" sx={{ mt: 4 }}>
+            <Container maxWidth="lg" sx={{ mt: 2, ml: 2 }}>
                 {children}
             </Container>
         </>

@@ -1,45 +1,49 @@
-import * as React from "react";
+import { Navigate } from "react-router-dom";
 import { useState } from "react";
-
-import type { User } from "../../model/user";
 import { useLogin } from "../hook/use.login.hook";
 
-export const Login: React.FC<{
-    login?: User;
-}> = ({ login }) => {
-    const { login: doLogin } = useLogin();
+import "./ui/Login.css";
 
-    const [form, setForm] = useState<User>(
-        login ?? {
-            id: "",
-            name: "",
-            email: "",
-            password: "",
-        }
-    );
+export const Login = () => {
+    const { login, user, error } = useLogin();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        doLogin(form);
+        login(email, password);
+    };
+
+    if (user) {
+        return <Navigate to="/profile" replace />;
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-        <input
-            aria-label="email"
-            type="email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
+        <form className="login-form" onSubmit={onSubmit}>
+            <div className="login-form-content">
+                <h2>Connexion</h2>
+                <label htmlFor="email">Email</label>
+                <input
+                    aria-label="email"
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
 
-        <input
-            aria-label="password"
-            type="password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-        />
+                <label htmlFor="password">Mot de passe</label>
+                <input
+                    aria-label="password"
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
 
-        <button type="submit">Se connecter</button>
+            {error && <p>{error}</p>}
+
+                <button aria-label="Se connecter" className="login-button" type="submit">Se connecter</button>
+            </div>
         </form>
     );
 };

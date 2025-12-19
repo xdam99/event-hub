@@ -1,19 +1,20 @@
-import { Login } from "./modules/login/components/Login"
 import { AppWrapper } from "./modules/app/components/AppWrapper"
-import { BrowserRouter, Route } from "react-router-dom"
-import { Layout } from "./modules/app/components/Layout"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Login } from "./modules/login/components/Login"
+import { Register } from "./modules/register/components/Register"
+import { Profile } from "./modules/profile/components/Profile"
 
 function App() {
+
 	return (
 		<AppWrapper>
 			<BrowserRouter>
-				<Route path="/" element={ <App />}/>
-				<Route path="" element
-				<Route path='*' element={<h1>404 page not found</h1>} />
-				<Layout>
-					<h1>Hello World</h1>
-					<Login/>
-				</Layout>
+				<Routes>
+					<Route path="/" element={<Login />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/register" element={<Register />} />
+					<Route path="/profile" element={<Profile />} />
+				</Routes>
 			</BrowserRouter>
 		</AppWrapper>
 	)
