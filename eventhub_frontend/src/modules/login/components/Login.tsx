@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useState } from "react";
 
-import type { User } from "../../../domain/model/user";
-import { useLogin } from "../../../domain/hook/use.login.hook";
+import type { User } from "../../model/user";
+import { useLogin } from "../hook/use.login.hook";
 
 export const Login: React.FC<{
     login?: User;
@@ -39,7 +39,7 @@ export const Login: React.FC<{
             onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
 
-        <button type="submit">Login</button>
+        <button type="submit">Se connecter</button>
         </form>
     );
 };

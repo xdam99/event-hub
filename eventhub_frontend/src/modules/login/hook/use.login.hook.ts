@@ -1,4 +1,4 @@
-import type { User } from "../model/user";
+import type { User } from "../../model/user";
 
 export const useLogin = () => {
     function login(user: User) {

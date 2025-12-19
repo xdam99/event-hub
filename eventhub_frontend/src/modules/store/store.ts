@@ -8,7 +8,6 @@ const reducers = combineReducers({
     app: appReducer
 })
 
-
 export const createStore = (config: {
     dependencies: Dependencies
 }) => {
