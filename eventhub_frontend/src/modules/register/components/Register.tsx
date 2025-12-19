@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 
-import { CheckPassword } from "../../checkPassword/components/CheckPassword";
+import { CheckPassword } from "./checkPassword/components/CheckPassword";
 
 import "../ui/Register.css";
 
