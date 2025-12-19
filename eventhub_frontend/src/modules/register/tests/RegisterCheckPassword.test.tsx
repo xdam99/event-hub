@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { CheckPassword } from "../components/CheckPassword";
+import { CheckPassword } from "../../RegisterCheckPassword";
 
 describe("CheckPassword component", () => {
     it("should display all password rules", () => {
