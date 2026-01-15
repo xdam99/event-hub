@@ -64,6 +64,11 @@ describe('CreateEventUseCase', () => {
         await expect(useCase.execute(dto)).rejects.toThrow('Le prix est obligatoire');
     });
 
+    it('should throw an error if capacity is under 0', async () => {
+        const dto = { ...validEventDTO, capacity: -1 };
+        await expect(useCase.execute(dto)).rejects.toThrow('La capacité doit être positive');
+    });
+
     it('should throw an error if date is in the past', async () => {
         const dto = { ...validEventDTO, date: new Date(Date.now() - 1000) };
         await expect(useCase.execute(dto)).rejects.toThrow('La date doit être dans le futur');

@@ -2,11 +2,13 @@ export interface EventProps {
     title: string;
     description: string;
     date: Date;
-    createdAt?: Date;
-    updatedAt?: Date;
+    capacity: number;
+    price: number;
+    imageUrl?: string;
     venue: string;
     category: string;
-    price: number;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 export class Event {
     private props: EventProps;
@@ -62,6 +64,9 @@ export class Event {
         }
         if (!props.category || props.category.trim() === '') {
             throw new Error('La catégories est obligatoire');
+        }
+        if (props.capacity <= 0) {
+            throw new Error('La capacité doit être positive');
         }
         if (!props.price) {
             throw new Error('Le prix est obligatoire');

@@ -24,13 +24,35 @@ model User {
 }
 
 model Event {
-  id          String @id @default(uuid())
+  id          String      @id @default(uuid())
   title       String
   description String
   date        DateTime
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now())
+  capacity    Float
+  price       Float
+  imageUrl    String[]    @default([])
+  organizer   String
   venue       String
   category    String
-  price       Float
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now())
+}
+
+model Organizer {
+  id      String @id @default(uuid())
+  name    String
+  eventId String
+}
+
+model Venue {
+  id       String @id @default(uuid())
+  address  String
+  capacity Float
+  eventId  String
+}
+
+model Category {
+  id       String   @id @default(uuid())
+  category String[]
+  eventId  String
 }

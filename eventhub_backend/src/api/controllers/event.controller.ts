@@ -1,9 +1,54 @@
 import { Request, Response, NextFunction } from 'express';
+import { prisma } from "../prisma/client";
 import { CreateEventUseCase, CreateEventDTO } from '../../application/usecases/events/index';
+import { generateSignature, isValidPassword } from '../utility/index';
+import { LoginInputs } from '../../domain/entities/User';
 // import { GetAllEventsUseCase } from '../../application/usecases/GetAllEventUseCase';
 // import { GetEventByIdUseCase } from '../../application/usecases/GetEventByIdUseCase';
 // import { UpdateEventUseCase } from '../../application/usecases/UpdateEventUseCase';
 // import { DeleteEventUseCase } from '../../application/usecases/DeleteEventUseCase';
+
+export const login = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) : Promise<any> => {
+    try {
+        const {email, password} = req.body as LoginInputs;
+
+        const user = await prisma.user.findUnique({
+            where: {email: email}
+        });
+
+        // Pour éviter de donner des infos à par exemple une personne qui voudrait attaquer notre site
+        // Si le mail existe déjà dans notre BDD, on va mettre un message d'erreur générique
+        if(!user){
+            return res.jsonError("Invalid credentials", 401)
+        }
+
+        const isPasswordMatch = await isValidPassword(password, user.password, user.salt);
+
+        if(!isPasswordMatch){
+            return res.jsonError("Invalid credentials",401)
+        }
+
+        // Création du token avec notre fonction
+        const token = generateSignature({
+            id: user.id,
+            fisrtName: user.firstName,
+            lastName: user.lastName,
+            email: user.email, 
+            phone: user.phone,
+            role: user.role
+        })
+
+
+        res.jsonSuccess(token)
+
+    } catch (error) {
+        next(error);
+    }
+};
 
 export class EventController {
   constructor(
@@ -15,15 +60,12 @@ export class EventController {
   ) {}
 
   // POST /api/events
-  async create(req: Request, res: Response, next: NextFunction) {
+  create = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const dto: CreateEventDTO = req.body;
       const event = await this.createEventUseCase.execute(dto);
-      res.status(201).json({
-        success: true,
-        message: 'Event created successfully',
-        data: event
-      });
+      res.jsonSuccess(event, 201);
+      
     } catch (error) {
       next(error);
     }

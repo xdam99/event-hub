@@ -1,8 +1,9 @@
 // src/api/routes/eventRoutes.ts
 import { Router } from 'express';
-import { EventController } from '../controllers/EventController';
-import { CreateEventUseCase } from '../../application/usecases/events/index';
+import { EventController, login } from '../controllers/event.controller';
+import { CreateEventUseCase, GetAllEventsUseCase } from '../../application/usecases/events/index';
 import { InMemoryEventRepository } from '../../infrastructure/repositories/InMemoryEventRepository';
+import { authenticationMiddleware } from '../middlewares/index';
 
 
 const router = Router();
@@ -12,18 +13,19 @@ const createUseCase = new CreateEventUseCase(repository);
 
 const controller = new EventController(
     createUseCase,
-    // getAllUseCase,
+    // GetAllEventsUseCase,
     // getByIdUseCase,
     // updateUseCase,
     // deleteUseCase
 );
 
 // Routes REST pour les événements
-router.post('/events', controller.create);
+router.post("/login", login)
+router.post('/create', authenticationMiddleware, controller.create);
 // router.get('/', );
 // router.get('/:id', );
 // router.put('/:id', );
 // router.delete('/:id',);
 
 
-export {router as eventRoute};
+export {router as EventRoute};
