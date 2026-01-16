@@ -1,75 +1,52 @@
 export interface EventProps {
+    id?: string;
     title: string;
     description: string;
     date: Date;
     capacity: number;
     price: number;
-    imageUrl?: string;
+    organizer: string;
     venue: string;
     category: string;
+    imageUrl?: string[];
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+
 export class Event {
     private props: EventProps;
 
-    get title(): string {
-        return this.props.title;
-    }
-
-    get description(): string {
-        return this.props.description;
-    }
-
-    get date(): Date {
-        return this.props.date;
-    }
-
-    
-    get venue(): string {
-        return this.props.venue;
-    }
-    
-    get category(): string {
-        return this.props.category;
-    }
-    
-    get price(): number {
-        return this.props.price;
-    }
     constructor(props: EventProps) {
         this.validate(props);
         this.props = {
             ...props,
             createdAt: props.createdAt || new Date(),
-            updatedAt: props.updatedAt || new Date()
+            updatedAt: props.updatedAt || new Date(),
+            imageUrl: props.imageUrl || [],
         };
     }
-    private validate(props: EventProps): void {
-        // Exemple mais il faut le faire sur toutes les autres règles métier
-        if (!props.title || props.title.trim() === '') {
-            throw new Error('Le titre est obligatoire');
-        }
-        if (!props.description || props.description.trim() === '') {
-            throw new Error('La description est obligatoire');
-        }
-        if (!props.date) {
-            throw new Error('La date est obligatoire');
-        }
-        if (props.date.getTime() < Date.now()) {
-            throw new Error('La date doit être dans le futur');
-        }
-        if (!props.venue || props.venue.trim() === '') {
-            throw new Error('Le lieu est obligatoire');
-        }
-        if (!props.category || props.category.trim() === '') {
-            throw new Error('La catégories est obligatoire');
-        }
-        if (props.capacity <= 0) {
-            throw new Error('La capacité doit être positive');
-        }
-        if (!props.price) {
-            throw new Error('Le prix est obligatoire');
-        }
+
+    private validate(props: EventProps) {
+        if (!props.title) throw new Error("Le titre est obligatoire");
+        if (!props.description) throw new Error("La description est obligatoire");
+        if (!props.date) throw new Error("La date est obligatoire");
+        if (!props.capacity) throw new Error("La capacité est obligatoire");
+        if (!props.price) throw new Error("Le prix est obligatoire");
+        if (!props.organizer) throw new Error("L'organisateur est obligatoire");
+        if (!props.venue) throw new Error("Le lieu est obligatoire");
+        if (!props.category) throw new Error("La catégorie est obligatoire");
     }
+
+    get title() { return this.props.title; }
+    get description() { return this.props.description; }
+    get date() { return this.props.date; }
+    get capacity() { return this.props.capacity; }
+    get price() { return this.props.price; }
+    get organizer() { return this.props.organizer; }
+    get venue() { return this.props.venue; }
+    get category() { return this.props.category; }
+    get imageUrl() { return this.props.imageUrl; }
+    get createdAt() { return this.props.createdAt; }
+    get updatedAt() { return this.props.updatedAt; }
 }

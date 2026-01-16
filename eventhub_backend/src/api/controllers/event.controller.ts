@@ -1,12 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import { prisma } from "../prisma/client";
-import { CreateEventUseCase, CreateEventDTO } from '../../application/usecases/events/index';
+import { 
+    CreateEventUseCase, 
+    CreateEventDTO, 
+    GetAllEventsUseCase,
+    GetEventByIdUseCase,
+    GetEventByIdDTO,
+    // UpdateEventUseCase,
+    // DeleteEventUseCase 
+} from '../../application/usecases/events/index';
 import { generateSignature, isValidPassword } from '../utility/index';
 import { LoginInputs } from '../../domain/entities/User';
-// import { GetAllEventsUseCase } from '../../application/usecases/GetAllEventUseCase';
-// import { GetEventByIdUseCase } from '../../application/usecases/GetEventByIdUseCase';
-// import { UpdateEventUseCase } from '../../application/usecases/UpdateEventUseCase';
-// import { DeleteEventUseCase } from '../../application/usecases/DeleteEventUseCase';
 
 export const login = async (
     req: Request,
@@ -51,52 +55,62 @@ export const login = async (
 };
 
 export class EventController {
-  constructor(
-    private readonly createEventUseCase: CreateEventUseCase,
-    // private readonly getAllEventsUseCase: GetAllEventsUseCase,
-    // private readonly getEventByIdUseCase: GetEventByIdUseCase,
-    // private readonly updateEventUseCase: UpdateEventUseCase,
-    // private readonly deleteEventUseCase: DeleteEventUseCase
-  ) {}
+    constructor(
+        private readonly createEventUseCase: CreateEventUseCase,
+        private readonly getAllEventsUseCase: GetAllEventsUseCase,
+        private readonly getEventByIdUseCase: GetEventByIdUseCase,
+        // private readonly updateEventUseCase: UpdateEventUseCase,
+        // private readonly deleteEventUseCase: DeleteEventUseCase
+    ) {}
 
-  // POST /api/events
-  create = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const dto: CreateEventDTO = req.body;
-      const event = await this.createEventUseCase.execute(dto);
-      res.jsonSuccess(event, 201);
-      
-    } catch (error) {
-      next(error);
+    // POST /api/events
+    create = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+        const dto: CreateEventDTO = req.body;
+        const event = await this.createEventUseCase.execute(dto);
+        res.jsonSuccess(event, 201);
+        
+        } catch (error) {
+        next(error);
+        }
     }
-  }
 
-  // GET /api/events
-  // async getAll(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const events = await this.getAllEventsUseCase.execute();
-  //     res.status(200).json({
-  //       success: true,
-  //       data: events
-  //     });
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+    // GET /api/events
+    getAll = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+        const events = await this.getAllEventsUseCase.execute();
+        res.jsonSuccess(events, 200);
+        } catch (error) {
+        next(error);
+        }
+    }
 
-  // // GET /api/events/:id
-  // async getById(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const { id } = req.params;
-  //     const event = await this.getEventByIdUseCase.execute(id);
-  //     if (!event) {
-  //       return res.status(404).json({ success: false, message: 'Event not found' });
-  //     }
-  //     res.status(200).json({ success: true, data: event });
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+    // GET /api/events/:id
+    getById = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            
+            let id: string;
+
+            if (Array.isArray(req.params.id)) {
+                id = req.params.id[0];
+            } else if (typeof req.params.id === 'string') {
+                id = req.params.id;
+            } else {
+                return res.jsonError('Invalid id', 400);
+            }
+
+            const dto: GetEventByIdDTO = { id };
+            const event = await this.getEventByIdUseCase.execute(dto);
+
+            if (!event) {
+                return res.jsonError('Event not found', 404);
+            }
+
+            res.jsonSuccess(event, 200);
+        } catch (error) {
+            next(error);
+        }
+    };
 
   // // PUT /api/events/:id
   // async update(req: Request, res: Response, next: NextFunction) {

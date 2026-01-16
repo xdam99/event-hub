@@ -6,6 +6,7 @@ export interface CreateEventDTO {
     description: string;
     date: Date;
     venue: string;
+    organizer: string;
     category: string;
     capacity: number;
     price: number;
@@ -24,6 +25,7 @@ export class CreateEventUseCase {
             date: new Date(dto.date),
             venue: dto.venue,
             category: dto.category,
+            organizer: dto.organizer,
             price: dto.price,
             capacity: dto.capacity,
             createdAt: new Date(),

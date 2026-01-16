@@ -1,4 +1,5 @@
 @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiZTkzZjlhLTIwYWUtNGU3NS04YjAxLWY0YTlhNTE1MmVjNSIsImZpc3J0TmFtZSI6IkRhbWllbiIsImxhc3ROYW1lIjoiSiIsImVtYWlsIjoiQjRiS3hAZXhhbXBsZS5jb20iLCJwaG9uZSI6IjAxMjM0NTY3ODkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Njg1MTY0NjMsImV4cCI6MTc2ODYwMjg2M30.drYwIUbtQdwqLW-1WypU1VsS1V83N8lrajN1qzmRNS8
+@Eventid=23086603-09e5-4d97-91d1-c60be52d716c
 
 ### Login
 POST http://localhost:8000/api/events/login
@@ -14,14 +15,23 @@ POST http://localhost:8000/api/events/create
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
-{
-            "title": "JAVAFEST",
-            "description": "Event",
-            "date": "2026-01-16T19:25:28.984Z",
-            "venue": "10 Rue de Jeanne",
-            "capacity": 100,
-            "organizer": "Damien J",
-            "category": "Api",
-            "price": 55
+
+{           
+    "title": "JAVAFEST",
+    "description": "Event",
+    "date": "2026-01-16T19:25:28.984Z",
+    "venue": "10 Rue de Jeanne",
+    "capacity": 100,
+    "organizer": "Damien J",
+    "category": "Api",
+    "price": 55
 }
 
+
+### GET Events with JWT
+GET http://localhost:8000/api/events/
+Authorization: Bearer {{token}}
+
+### GET Event By ID with JWT
+GET http://localhost:8000/api/events/{{Eventid}}
+Authorization: Bearer {{token}}

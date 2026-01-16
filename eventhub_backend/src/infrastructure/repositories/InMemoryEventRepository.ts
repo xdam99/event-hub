@@ -21,7 +21,7 @@ export class InMemoryEventRepository implements EventRepositoryInterface {
   }
 
   async findAll(): Promise<Event[]> {
-    return [...this.events]; // copie pour eviter les modifications
+    return this.events;
   }
 
   async update(event: Event): Promise<Event> {
