@@ -44,8 +44,8 @@ export class Event {
         if (!props.organizer) throw new Error("L'organisateur est obligatoire");
         if (!props.venue) throw new Error("Le lieu est obligatoire");
         if (!props.category) throw new Error("La catégorie est obligatoire");
-        if (this.props.capacity <= 0) throw new Error("La capacité doit être positive");
-        if (this.props.date <= new Date()) throw new Error("La date doit être dans le futur");
+        if (props.capacity <= 0) throw new Error("La capacité doit être positive");
+        if (props.date <= new Date()) throw new Error("La date doit être dans le futur");
     }
 
     get id() { return this.props.id; }

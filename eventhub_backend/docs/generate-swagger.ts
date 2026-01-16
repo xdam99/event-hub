@@ -1,5 +1,6 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import fs from "fs";
+import path from "path";
 import swaggerOptions from "./swagger.config";
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);

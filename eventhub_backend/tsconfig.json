@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "commonjs",
     "target": "ES2021",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -12,7 +12,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "types": ["node"],
+    "types": ["node", "jest"],
     "paths": {
       "../*": ["src/*"]
     },
