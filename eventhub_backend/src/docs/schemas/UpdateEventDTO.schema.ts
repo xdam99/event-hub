@@ -2,17 +2,8 @@
  * @swagger
  * components:
  *   schemas:
- *     CreateEventDTO:
+ *     UpdateEventDTO:
  *       type: object
- *       required:
- *         - title
- *         - description
- *         - date
- *         - capacity
- *         - price
- *         - organizer
- *         - venue
- *         - category
  *       properties:
  *         title:
  *           type: string

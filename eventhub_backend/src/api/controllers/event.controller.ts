@@ -145,7 +145,7 @@ export class EventController {
 
             await this.deleteEventUseCase.execute(id);
 
-            res.jsonSuccess({ message: 'Event deleted successfully' }, 204);
+            res.jsonSuccess('Event deleted successfully', 200);
 
         } catch (error) {
             next(error);
