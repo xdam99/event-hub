@@ -1,62 +1,40 @@
-import { Event } from '../../domain/entities/Event';
 import { EventRepositoryInterface } from '../../domain/interfaces/EventRepositoryInterface';
-import { v4 as uuidv4 } from 'uuid';
+import { Event } from '../../domain/entities/Event';
+import { UpdateEventDTO } from '../../application/usecases/events/index';
 
 export class InMemoryEventRepository implements EventRepositoryInterface {
-  private events: Event[] = [];
+    private events: Event[] = [];
 
-  async save(event: Event): Promise<Event> {
-    // Genere un ID
-    if (!(event as any).props.id) {
-      (event as any).props.id = uuidv4();
+    async save(event: Event): Promise<Event> {
+        this.events.push(event);
+        return event;
     }
 
-    this.events.push(event);
-    return event;
-  }
-
-  async findById(id: string): Promise<Event | null> {
-    const event = this.events.find(e => (e as any).props.id === id);
-    return event ?? null;
-  }
-
-  async findAll(): Promise<Event[]> {
-    return this.events;
-  }
-
-  async update(event: Event): Promise<Event> {
-    const index = this.events.findIndex(e => (e as any).props.id === (event as any).props.id);
-    if (index === -1) {
-      throw new Error('Event not found');
+    async findAll(): Promise<Event[]> {
+        return this.events;
     }
 
-    this.events[index] = event;
-    return event;
-  }
-
-  async delete(id: string): Promise<void> {
-    const index = this.events.findIndex(e => (e as any).props.id === id);
-    if (index === -1) {
-      throw new Error('Event not found');
+    async findById(id: string): Promise<Event | null> {
+        return this.events.find(e => (e as any).props.id === id) || null;
     }
 
-    this.events.splice(index, 1);
-  }
+    async update(id: string, data: UpdateEventDTO): Promise<Event> {
+        const index = this.events.findIndex(e => (e as any).props.id === id);
+        if (index === -1) throw new Error('Event not found');
 
-  async findByOrganizerId(organizerId: string): Promise<Event[]> {
-    return this.events.filter(e => (e as any).props.organizerId === organizerId);
-  }
+        const oldEvent = this.events[index];
+        const updated = new Event({
+            ...((oldEvent as any).props),
+            ...data                        
+        });
 
-  async findByCategoryId(categoryId: string): Promise<Event[]> {
-    return this.events.filter(e => (e as any).props.category === categoryId);
-  }
+        this.events[index] = updated;
+        return updated;
+    }
 
-  // Méthodes parce que je veux respecter l'interface
-  async findByCategory(category: string): Promise<Event[]> {
-    return this.events.filter(e => (e as any).props.category === category);
-  }
 
-  async findByDate(date: Date): Promise<Event[]> {
-    return this.events.filter(e => (e as any).props.date.toDateString() === date.toDateString());
-  }
+    async delete(id: string): Promise<void> {
+        this.events = this.events.filter(e => (e as any).props.id !== id);
+    }
+
 }

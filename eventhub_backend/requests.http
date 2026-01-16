@@ -1,20 +1,19 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiZTkzZjlhLTIwYWUtNGU3NS04YjAxLWY0YTlhNTE1MmVjNSIsImZpc3J0TmFtZSI6IkRhbWllbiIsImxhc3ROYW1lIjoiSiIsImVtYWlsIjoiQjRiS3hAZXhhbXBsZS5jb20iLCJwaG9uZSI6IjAxMjM0NTY3ODkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Njg1MTY0NjMsImV4cCI6MTc2ODYwMjg2M30.drYwIUbtQdwqLW-1WypU1VsS1V83N8lrajN1qzmRNS8
-@Eventid=23086603-09e5-4d97-91d1-c60be52d716c
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcyM2VkZWQ5LWVhNDQtNDlhNi1iYTZmLWYwMDgyOWIzMjJhZSIsImZpc3J0TmFtZSI6IkRhbWllbiIsImxhc3ROYW1lIjoiSiIsImVtYWlsIjoiZGFtaWVuQGdtYWlsLmNvbSIsInBob25lIjoiMDEyMzQ1Njc4OSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2ODU1NTk4MSwiZXhwIjoxNzY4NjQyMzgxfQ.dXBZAMAtxQEWjctBsT4PUfmWQyeO9fK2AkQ-bYIzj_M
+@Eventid=6420ae79-98dd-439a-bd93-83d0d6fd0246
 
 ### Login
 POST http://localhost:8000/api/events/login
 Content-Type: application/json
 
 {
-    "email": "B4bKx@example.com",
-    "password": "qwerty"
+    "email": "damien@gmail.com",
+    "password": "azerty"
 }
 
 ### POST Event
 POST http://localhost:8000/api/events/create
 Content-Type: application/json
 Authorization: Bearer {{token}}
-
 
 {           
     "title": "JAVAFEST",
@@ -34,4 +33,20 @@ Authorization: Bearer {{token}}
 
 ### GET Event By ID with JWT
 GET http://localhost:8000/api/events/{{Eventid}}
+Authorization: Bearer {{token}}
+
+### PUT Event with JWT
+PUT http://localhost:8000/api/events/{{Eventid}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{           
+    "title": "JAVAFEST 2026",
+    "description": "Event",
+    "capacity": 3000,
+    "price": 75
+}
+
+### DELETE Event with JWT
+DELETE http://localhost:8000/api/events/{{Eventid}}
 Authorization: Bearer {{token}}

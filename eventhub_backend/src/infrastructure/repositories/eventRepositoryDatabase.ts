@@ -1,6 +1,7 @@
 import { prisma } from '../../api/prisma/client';
 import { EventRepositoryInterface } from '../../domain/interfaces/EventRepositoryInterface';
 import { Event } from '../../domain/entities/Event';
+import { UpdateEventDTO } from '../../application/usecases/events';
 
 export class EventRepositoryDatabase implements EventRepositoryInterface {
     async save(event: Event): Promise<Event> {
@@ -69,20 +70,20 @@ export class EventRepositoryDatabase implements EventRepositoryInterface {
             });
         }
 
-    async update(event: Event): Promise<Event> {
+    async update(id: string, data: UpdateEventDTO): Promise<Event> {
         const updated = await prisma.event.update({
-            where: { id: event.id },
+            where: { id },
             data: {
-            title: event.title,
-            description: event.description,
-            date: event.date,
-            capacity: event.capacity,
-            price: event.price,
-            organizer: event.organizer,
-            venue: event.venue,
-            category: event.category,
-            imageUrl: event.imageUrl || [],
-            updatedAt: new Date(),
+                title: data.title,
+                description: data.description,
+                date: data.date,
+                capacity: data.capacity,
+                price: data.price,
+                organizer: data.organizer,
+                venue: data.venue,
+                category: data.category,
+                imageUrl: data.imageUrl || [],
+                updatedAt: new Date(),
             },
         });
 
@@ -100,6 +101,7 @@ export class EventRepositoryDatabase implements EventRepositoryInterface {
             updatedAt: updated.updatedAt,
         });
     }
+
 
     async delete(id: string): Promise<void> {
         await prisma.event.delete({ where: { id } });

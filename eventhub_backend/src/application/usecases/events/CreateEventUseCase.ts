@@ -10,6 +10,7 @@ export interface CreateEventDTO {
     category: string;
     capacity: number;
     price: number;
+    imageUrl?: string[]
 }
 
 export class CreateEventUseCase {

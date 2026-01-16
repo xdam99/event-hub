@@ -6,8 +6,8 @@ import {
     GetAllEventsUseCase,
     GetEventByIdUseCase,
     GetEventByIdDTO,
-    // UpdateEventUseCase,
-    // DeleteEventUseCase 
+    UpdateEventUseCase,
+    DeleteEventUseCase 
 } from '../../application/usecases/events/index';
 import { generateSignature, isValidPassword } from '../utility/index';
 import { LoginInputs } from '../../domain/entities/User';
@@ -59,8 +59,8 @@ export class EventController {
         private readonly createEventUseCase: CreateEventUseCase,
         private readonly getAllEventsUseCase: GetAllEventsUseCase,
         private readonly getEventByIdUseCase: GetEventByIdUseCase,
-        // private readonly updateEventUseCase: UpdateEventUseCase,
-        // private readonly deleteEventUseCase: DeleteEventUseCase
+        private readonly updateEventUseCase: UpdateEventUseCase,
+        private readonly deleteEventUseCase: DeleteEventUseCase
     ) {}
 
     // POST /api/events
@@ -68,6 +68,7 @@ export class EventController {
         try {
         const dto: CreateEventDTO = req.body;
         const event = await this.createEventUseCase.execute(dto);
+
         res.jsonSuccess(event, 201);
         
         } catch (error) {
@@ -79,9 +80,14 @@ export class EventController {
     getAll = async (req: Request, res: Response, next: NextFunction) => {
         try {
         const events = await this.getAllEventsUseCase.execute();
+
+        if (!events) {
+            return res.jsonError('No events found', 404);
+        }
+
         res.jsonSuccess(events, 200);
         } catch (error) {
-        next(error);
+            next(error);
         }
     }
 
@@ -112,33 +118,37 @@ export class EventController {
         }
     };
 
-  // // PUT /api/events/:id
-  // async update(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const { id } = req.params;
-  //     const dto = req.body;
-  //     const updatedEvent = await this.updateEventUseCase.execute(id, dto);
-  //     res.status(200).json({
-  //       success: true,
-  //       message: 'Event updated successfully',
-  //       data: updatedEvent
-  //     });
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+    // PUT /api/events/:id
+    update = async(req: Request, res: Response, next: NextFunction) => {
+        try {
 
-  // // DELETE /api/events/:id
-  // async delete(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const { id } = req.params;
-  //     await this.deleteEventUseCase.execute(id);
-  //     res.status(200).json({
-  //       success: true,
-  //       message: 'Event deleted successfully'
-  //     });
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+        const { id } = req.params;
+        const updatedEvent = await this.updateEventUseCase.execute({ 
+            id,
+            ...req.body
+        });
+        
+        if (!updatedEvent) {
+            return res.jsonError('Event not found', 404);
+        }
+
+        res.jsonSuccess(updatedEvent, 200);
+        } catch (error) {
+        next(error);
+        }
+    }
+
+  // DELETE /api/events/:id
+    async delete(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = req.params.id as string;
+
+            await this.deleteEventUseCase.execute(id);
+
+            res.jsonSuccess({ message: 'Event deleted successfully' }, 204);
+
+        } catch (error) {
+            next(error);
+        }
+    }
 }

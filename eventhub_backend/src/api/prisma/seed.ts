@@ -19,8 +19,16 @@ const users = [
         "firstName": "Damien",
         "lastName": "J",
         "phone": "0123456789",
-        "email": "B4bKx@example.com",
+        "email": "damien@gmail.com",
         "role": "admin",
+        "password": "azerty",
+    },
+    {
+        "firstName": "Lea",
+        "lastName": "M",
+        "phone": "0123456789",
+        "email": "lea@gmail.com",
+        "role": "user",
         "password": "qwerty",
     }
 ]
@@ -35,6 +43,28 @@ const events = [
             "capacity": 100,
             "organizer": "Damien J",
             "price": 50
+        },
+        {
+            "title": "Concert Rock",
+            "description": "Un super concert",
+            "date": new Date(Date.now() + 86400000), // demain
+            "venue": "Salle de Concert",
+            "category": "Musique",
+            "capacity": 200,
+            "organizer": "Damien J",
+            "price": 99,
+            "imageUrl": [],
+        },
+        {
+            "title": "Concert Jazz",
+            "description": "Un super concert",
+            "date": new Date(Date.now() + 2 * 86400000), // dans 2 jours
+            "venue": "Salle de Concert",
+            "category": "Musique",
+            "capacity": 200,
+            "organizer": "Damien J",
+            "price": 75,
+            "imageUrl": [],
         }
 ]
 
@@ -51,13 +81,17 @@ const main = async () => {
                 password: hashedPassword
             }
         });
+        console.log(`Utilisateur ${users[i].email} créé !`);
     }
     for (const event of events) {
             const id = uuidv4()
         await prisma.event.create({ 
             data: {...event, id: uuidv4()}
         });
+        console.log(`Event ${event.title} créé !`);
     }
+
+    console.log("Tout est créé !");
 };
 
 main()

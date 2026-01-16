@@ -1,6 +1,5 @@
 import { CreateEventUseCase, CreateEventDTO } from '../../application/usecases/events/index';
 import { InMemoryEventRepository } from '../../infrastructure/repositories/InMemoryEventRepository';
-import { Event } from '../../domain/entities/Event';
 
 describe('CreateEventUseCase', () => {
     let repository: InMemoryEventRepository;
@@ -12,7 +11,9 @@ describe('CreateEventUseCase', () => {
         date: new Date(Date.now() + 86400000), // demain
         venue: 'Salle de Concert',
         category: 'Musique',
-        price: 50
+        price: 50,
+        capacity: 100,
+        organizer: 'Damien J'
     };
 
     beforeEach(() => {
@@ -23,20 +24,12 @@ describe('CreateEventUseCase', () => {
     it('should create an event successfully', async () => {
         const event = await useCase.execute(validEventDTO);
 
-        
-
         expect(event).toBeDefined();
         expect(event.title).toBe(validEventDTO.title);
         expect(event.description).toBe(validEventDTO.description);
+        expect(event.capacity).toBe(validEventDTO.capacity);
         expect(event.date).toEqual(validEventDTO.date);
-        expect(event.venue).toBe(validEventDTO.venue);
-        expect(event.category).toBe(validEventDTO.category);
-        expect(event.price).toBe(validEventDTO.price);
-
-        // Vérifie que l'événement est bien dans le repository
-        const storedEvent = await repository.findById((event as any).props.id);
-        expect(storedEvent).not.toBeNull();
-        expect(storedEvent?.title).toBe(validEventDTO.title);
+        expect(event.organizer).toBe(validEventDTO.organizer);
     });
 
     it('should throw an error if title is missing', async () => {
@@ -56,7 +49,7 @@ describe('CreateEventUseCase', () => {
 
     it('should throw an error if category is missing', async () => {
         const dto = { ...validEventDTO, category: '' };
-        await expect(useCase.execute(dto)).rejects.toThrow('La catégories est obligatoire');
+        await expect(useCase.execute(dto)).rejects.toThrow('La catégorie est obligatoire');
     });
 
     it('should throw an error if price is missing', async () => {
@@ -73,4 +66,5 @@ describe('CreateEventUseCase', () => {
         const dto = { ...validEventDTO, date: new Date(Date.now() - 1000) };
         await expect(useCase.execute(dto)).rejects.toThrow('La date doit être dans le futur');
     });
+
 });

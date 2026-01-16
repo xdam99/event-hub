@@ -20,10 +20,18 @@ export class Event {
     constructor(props: EventProps) {
         this.validate(props);
         this.props = {
-            ...props,
+            id: props.id || crypto.randomUUID(),
+            title: props.title,
+            description: props.description,
+            date: props.date,
+            capacity: props.capacity,
+            price: props.price,
+            organizer: props.organizer,
+            venue: props.venue,
+            category: props.category,
+            imageUrl: props.imageUrl || [],
             createdAt: props.createdAt || new Date(),
             updatedAt: props.updatedAt || new Date(),
-            imageUrl: props.imageUrl || [],
         };
     }
 
@@ -36,8 +44,11 @@ export class Event {
         if (!props.organizer) throw new Error("L'organisateur est obligatoire");
         if (!props.venue) throw new Error("Le lieu est obligatoire");
         if (!props.category) throw new Error("La catégorie est obligatoire");
+        if (this.props.capacity <= 0) throw new Error("La capacité doit être positive");
+        if (this.props.date <= new Date()) throw new Error("La date doit être dans le futur");
     }
 
+    get id() { return this.props.id; }
     get title() { return this.props.title; }
     get description() { return this.props.description; }
     get date() { return this.props.date; }
