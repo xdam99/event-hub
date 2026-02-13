@@ -16,7 +16,7 @@ export class GenerateOtpSecretUseCase {
     async execute(input: GenerateOtpSecretInput): Promise<GenerateOtpSecretOutput> {
         const user = await this.userRepository.findById(input.userId);
         if (!user) {
-            throw new Error('User not found');
+            throw new Error('Utilisateur non trouvé');
         }
         const secret = generateSecret();
         await this.userRepository.updateOtpFields(input.userId, secret, user.otp_enable);

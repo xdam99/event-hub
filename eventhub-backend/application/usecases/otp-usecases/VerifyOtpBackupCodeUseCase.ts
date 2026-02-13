@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { UserRepositoryInterface } from '../../../domain/interfaces/UserRepositoryInterface';
 import { IOtpBackupCodeRepository } from '../../../domain/interfaces/OtpBackupCodeRepositoryInterface';
 import { generateSignature } from '../../../api/utility/password.utility';
@@ -30,29 +31,35 @@ export class VerifyBackupCodeUseCase {
             throw new Error('Utilisateur non trouvé');
         }
         if (user.otp_enable !== 1) {
-            throw new Error('OTP n\'est pas activé pour cet utilisateur');
+            throw new Error('OTP non activé pour cet utilisateur');
         }
         const backupCodeEntity = await this.backupCodeRepository.findByUserId(input.userId);
         if (!backupCodeEntity) {
-            throw new Error('Aucun code de sauvegarde trouvé pour cet utilisateur. Veuillez activer OTP et générer des codes de sauvegarde.');
+            throw new Error('Aucun code de secours trouvé pour cet utilisateur');
         }
-        const codes: string[] = JSON.parse(backupCodeEntity.props.codes);
-        const codeIndex = codes.findIndex(
-            (c) => c.toUpperCase() === input.backupCode.toUpperCase()
-        );
-        if (codeIndex === -1) {
+        const hashedCodes: string[] = JSON.parse(backupCodeEntity.props.codes);
+        let matchedIndex = -1;
+        for (let i = 0; i < hashedCodes.length; i++) {
+            const isMatch = await bcrypt.compare(input.backupCode.toUpperCase(), hashedCodes[i]);
+            if (isMatch) {
+                matchedIndex = i;
+                break;
+            }
+        }
+
+        if (matchedIndex === -1) {
             backupCodeEntity.props.nb_consecutive_tests += 1;
             await this.backupCodeRepository.update(backupCodeEntity);
 
             if (backupCodeEntity.props.nb_consecutive_tests >= 5) {
-                throw new Error('Trop de tentatives échouées. Veuillez réactiver OTP pour générer de nouveaux codes de sauvegarde.');
+                throw new Error('Trop de tentatives infructueuses. Veuillez régénérer vos codes de secours.');
             }
 
-            throw new Error('Code de secours invalide. Veuillez réessayer.');
+            throw new Error('Code de secours invalide');
         }
 
-        codes.splice(codeIndex, 1);
-        backupCodeEntity.props.codes = JSON.stringify(codes);
+        hashedCodes.splice(matchedIndex, 1);
+        backupCodeEntity.props.codes = JSON.stringify(hashedCodes);
         backupCodeEntity.props.nb_code_used += 1;
         backupCodeEntity.props.nb_consecutive_tests = 0;
         await this.backupCodeRepository.update(backupCodeEntity);
@@ -73,7 +80,7 @@ export class VerifyBackupCodeUseCase {
                 createdAt: user.createdAt,
             },
             token,
-            remainingCodes: codes.length,
+            remainingCodes: hashedCodes.length,
         };
     }
 }

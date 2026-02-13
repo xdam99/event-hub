@@ -8,7 +8,6 @@ import {
 } from '../../application/usecases';
 import { EventRepositoryDatabase } from '../../infrastructure/repositories/EventRepositoryDatabase';
 
-// Instanciation du repository et des use cases
 const eventRepository = new EventRepositoryDatabase();
 const createEventUseCase = new CreateEventUseCase(eventRepository);
 const getAllEventsUseCase = new GetAllEventsUseCase(eventRepository);

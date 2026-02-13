@@ -2,8 +2,8 @@ import React from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { app } from "../main";
+import { CssBaseline, GlobalStyles } from "@mui/material";
 
-//Little theme
 const theme = createTheme({
     palette: {
         background: {
@@ -16,11 +16,35 @@ const theme = createTheme({
     },
 });
 
+const globalStyles = (
+    <GlobalStyles
+        styles={{
+        html: {
+            width: '100%',
+            height: '100%',
+        },
+        body: {
+            margin: 0,
+            padding: 0,
+            width: '100%',
+            minHeight: '100%',
+            backgroundColor: '#f5f5f5'
+        },
+        '#root': {
+            width: '100%',
+            minHeight: '100%',
+        }
+        }}
+    />
+);
+
 export const AppWrapper: React.FC<{ children: React.ReactNode }> =
     ({ children }) => {
         return (
             <Provider store={app.store}>
                 <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    {globalStyles}
                     {children}
                 </ThemeProvider>
             </Provider>

@@ -38,11 +38,11 @@ export const getProfile = async (req: Request, res: Response, next: NextFunction
     try {
         const user = (req as Request & { user?: UserPayload }).user;
         if (!user) {
-            return res.status(401).jsonError('Not authenticated');
+            return res.status(401).jsonError('N\'est pas autorisé');
         }
         const fullUser = await userRepository.findById(user.id);
         if (!fullUser) {
-            return res.status(404).jsonError('User not found');
+            return res.status(404).jsonError('Utilisateur non trouvé');
         }
         res.jsonSuccess({
             id: fullUser.id,

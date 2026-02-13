@@ -11,7 +11,6 @@ export const hashPassword = async (password: string, salt: string) => {
     return bcrypt.hash(password, salt)
 }
 
-
 export const isValidPassword = async (
     enteredPassword: string,
     savedPassword: string,
@@ -34,6 +33,3 @@ export const validateSignature = (req: any) => {
     }
     return false;
 }
-
-
-//Merci Bocar
