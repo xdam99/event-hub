@@ -30,7 +30,7 @@ export const validateSignature = (req: any) => {
         signature = req.get("Authorization");
     }
     if (signature) {
-        const token = signature.startWith("Bearer ") ? signature.split(" ")[1] : signature;
+        const token = signature.startsWith("Bearer ") ? signature.split(" ")[1] : signature;
         const payload = jwt.verify(token, getEnvVariable("JWT_SECRET")) as UserPayload;
         req.user = payload;
         return true;

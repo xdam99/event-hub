@@ -9,7 +9,6 @@ export const useEvents = () => {
     const { events, isLoading, error } = useSelector((state: AppState) => state.events);
 
     useEffect(() => {
-        // Fetch only if needed (e.g., list empty and no error)
         if (events.length === 0 && !error && !isLoading) {
             dispatch(fetchEventsAction());
         }
