@@ -3,6 +3,8 @@ import { Provider } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { app } from "../main";
 import { CssBaseline, GlobalStyles } from "@mui/material";
+import { Header } from "../../base/header/components/Header";
+import { Hydrater } from "../../features/hydrater/components/Hydrater";
 
 const theme = createTheme({
     palette: {
@@ -45,7 +47,10 @@ export const AppWrapper: React.FC<{ children: React.ReactNode }> =
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
                     {globalStyles}
-                    {children}
+                    <Header />
+                    <Hydrater>
+                        {children}
+                    </Hydrater>
                 </ThemeProvider>
             </Provider>
         );

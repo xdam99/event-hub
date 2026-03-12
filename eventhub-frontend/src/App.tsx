@@ -1,12 +1,14 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AppWrapper } from './modules/app/components/AppWrapper'
 import { Layout } from './modules/app/components/Layout'
-import { LoginForm } from './modules/authentification/components/LoginForm'
-import { RegisterForm } from './modules/authentification/components/RegisterForm'
-import { OtpVerifyPage } from './modules/authentification/components/OtpVerifyPage'
-import { ProfilePage } from './modules/user/components/ProfilePage'
+import { LoginForm } from './modules/features/authentication/components/LoginForm'
+import { RegisterForm } from './modules/features/authentication/components/RegisterForm'
+import { OtpVerifyPage } from './modules/features/authentication/components/OtpVerifyPage'
+import { ProfilePage } from './modules/features/user/components/ProfilePage'
 import './App.css'
+import { lazy, Suspense } from 'react'
 
+const Event = lazy(() => import('./modules/features/events/components/Event'))
 
 //Browerrouter to provide routing
 //Routes to provide routes
@@ -21,6 +23,11 @@ function App() {
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/otp-verify" element={<OtpVerifyPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path='/events' element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <Event/>
+              </Suspense>
+            }/>
           </Routes>
         </Layout>
       </BrowserRouter>

@@ -1,0 +1,78 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYwNzZhNzQ5LTk4YzQtNGI5MS04MTdhLWM2NzQ1ZjIwZWE1NSIsInB1cnBvc2UiOiJvdHAtdmVyaWZpY2F0aW9uIiwiaWF0IjoxNzczMzM2Mzk0LCJleHAiOjE3NzMzMzY2OTR9.4z9-2-0uLPuClPWpcbt16WFP3gbZpscSiWZeZbVY3nI
+@Eventid=0d0f0239-a1cb-4cd7-9b9a-783f15676130
+
+### Login
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+    "email": "damien@gmail.com",
+    "password": "metallicaKH02**"
+}
+
+### POST Event
+POST http://localhost:3000/api/events/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{           
+    "title": "JAVAFEST",
+    "description": "Event",
+    "startDate": "2027-01-16T19:25:28.984Z",
+    "venueId": "10 Rue de Jeanne",
+    "capacity": 100,
+    "organizerId": "Damien J",
+    "categoryId": "Api",
+    "price": 55
+}
+
+
+### GET Events
+GET http://localhost:3000/api/events/
+Authorization: Bearer {{token}}
+
+### GET Event By ID 
+GET http://localhost:3000/api/events/{{Eventid}}
+Authorization: Bearer {{token}}
+
+### PUT Event with JWT
+PUT http://localhost:3000/api/events/{{Eventid}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{           
+    "title": "JAVAFEST 2026",
+    "description": "Event",
+    "capacity": 3000,
+    "price": 75
+}
+
+### DELETE Event with JWT
+DELETE http://localhost:3000/api/events/{{Eventid}}
+Authorization: Bearer {{token}}
+
+### GET QR Code pour 2FA
+GET http://localhost:3000/api/otp/generate
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### POST Vérification du code de Google Authenticator
+POST http://localhost:3000/api/otp/verify-activation
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRjNjhhNmExLTk0N2MtNGY3YS04OGJhLTgwYTcxYmM5OGU5MSIsImZpcnN0TmFtZSI6IkRhbWllbiIsImxhc3ROYW1lIjoiSiIsImVtYWlsIjoiZGFtaWVuQGdtYWlsLmNvbSIsInBob25lIjoiMDEyMzQ1Njc4OSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MDkxMDQ2MCwiZXhwIjoxNzcwOTk2ODYwfQ.dO0VWxEAL1do1Gtgsp0cP96aSFbg_2DriYPy2VQ2wcY",          # Remplacer par le code de Google Authenticator
+    "secret": "HD47J5PDMRC6SJJYLP4CNUQQ6RK4RVZU"
+}
+
+### Login avec Damien et OTP
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "metallicaKH02**",
+    "token": ""  
+}
+
+

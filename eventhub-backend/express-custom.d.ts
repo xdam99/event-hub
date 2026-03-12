@@ -1,4 +1,4 @@
-import { UserPayload } from './domain/entities/User';
+import { UserPayload } from './src/domain/entities/User';
 
 declare global {
     namespace Express {
