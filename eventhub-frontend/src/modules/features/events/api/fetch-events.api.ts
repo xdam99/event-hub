@@ -38,10 +38,10 @@ export class EventGateway implements IEventGateway {
             throw error;
         }
     }
-    async findPaginated(page: number, limit: number): Promise<EventsModel.PaginatedEvents> {
+    async findPaginated(cursor: string, limit: number): Promise<EventsModel.PaginatedEvents> {
         try {
             const response = await axios.get("http://localhost:3000/api/events", {
-                params: { page, limit },
+                params: { cursor, limit },
                 withCredentials: true,
             });
             return response.data.data;

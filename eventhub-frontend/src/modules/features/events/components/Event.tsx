@@ -5,28 +5,26 @@ import {
     CardContent,
     Stack,
     Avatar,
-    Pagination,
-    CircularProgress,
+    Button,
+    CircularProgress
 } from '@mui/material';
-import { useEvents }  from "../hooks/use-events.hook";
+import { useEvents } from "../hooks/use-events.hook";
 
 const Event = () => {
-    const { events, isLoading, currentPage, totalPages, goToPage } = useEvents();
+    // Récupération des données et fonctions depuis ton hook Redux mis à jour
+    const { events, isLoading, nextCursor, loadMore } = useEvents();
 
     return (
         <Box maxWidth="800px" mx="auto" py={4} px={2}>
-            <Typography variant="h4" component="h1" gutterBottom>Liste d'évènements</Typography>
+            <Typography variant="h4" component="h1" gutterBottom>
+                Liste d'évènements
+            </Typography>
             
             <Box>
-                {isLoading ? (
-                    <Box display="flex" justifyContent="center" my={4}>
-                        <CircularProgress />
-                    </Box>
-                ) : 
-                !events || events.length === 0 ? (
+                {(!events || events.length === 0) && !isLoading ? (
                     <Typography variant="body1">Aucun évènement trouvé.</Typography>
                 ) : (
-                    events.map((event) => (
+                    events?.map((event) => (
                         <Card key={event.id} sx={{ mb: 2 }}>
                             <CardContent>
                                 <Stack direction="row" spacing={2} alignItems="center" mb={2}>
@@ -41,22 +39,38 @@ const Event = () => {
                     ))
                 )}
 
-                {!isLoading && totalPages > 1 && (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
-                        <Pagination
-                            count={totalPages}
-                            page={currentPage}
-                            onChange={(_, page) => goToPage(page)}
-                            color="primary"
+                <Box 
+                    sx={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        mt: 6, 
+                        mb: 4, 
+                        gap: 2 
+                    }}
+                >
+                    {isLoading && <CircularProgress />}
+
+                    {!isLoading && nextCursor && (
+                        <Button 
+                            variant="contained" 
+                            color="primary" 
                             size="large"
-                            showFirstButton
-                            showLastButton
-                        />
-                    </Box>
-                )}
+                            onClick={loadMore}
+                        >
+                            Charger plus d'évènements
+                        </Button>
+                    )}
+
+                    {!isLoading && !nextCursor && events && events.length > 0 && (
+                        <Typography variant="body2" color="text.secondary">
+                            Vous avez vu tous les évènements !
+                        </Typography>
+                    )}
+                </Box>
             </Box>
         </Box>
     );
 };
 
-export default Event
+export default Event;

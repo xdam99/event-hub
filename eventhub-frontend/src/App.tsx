@@ -9,6 +9,7 @@ import './App.css'
 import { lazy, Suspense } from 'react'
 import AnalyticsDashboard from './modules/features/dashboard/components/AnalyticsDashboard'
 import { Box, CircularProgress } from '@mui/material'
+import Logout from './modules/features/authentication/components/Logout'
 
 const Event = lazy(() => import('./modules/features/events/components/Event'))
 
@@ -22,7 +23,7 @@ function App() {
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
-            <Route path="/logout" element={<Navigate to="/login" replace />} />
+            <Route path="/logout" element={<Logout />} />
             <Route path="/otp-verify" element={<OtpVerifyPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/dashboard" element={<AnalyticsDashboard />} />

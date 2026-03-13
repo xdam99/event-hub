@@ -5,9 +5,7 @@ interface EventsState {
     events: EventsModel.Event[];
     isLoading: boolean;
     error: string | null;
-    currentPage: number;
-    totalPages: number;
-    totalCount: number;
+    nextCursor?: string;
     limit: number;
 }
 
@@ -15,9 +13,7 @@ const initialState: EventsState = {
     events: [],
     isLoading: false,
     error: null,
-    currentPage: 1,
-    totalPages: 1,
-    totalCount: 0,
+    nextCursor: undefined,
     limit: 6,
 };
 
@@ -41,19 +37,22 @@ export const eventsSlice = createSlice({
             state.isLoading = true;
             state.error = null;
         },
-        fetchPaginatedEventsSuccess: (state, action: PayloadAction<EventsModel.PaginatedEvents>) => {
+        fetchPaginatedEventsSuccess: (state, action: PayloadAction<{events: EventsModel.Event[], nextCursor?: string, isFirstPage: boolean}>) => {
             state.isLoading = false;
-            state.events = action.payload.data;
-            state.currentPage = action.payload.page;
-            state.totalPages = action.payload.totalPages;
-            state.totalCount = action.payload.total;
+            state.error = null;
+            state.nextCursor = action.payload.nextCursor;
+
+            if (action.payload.isFirstPage) {
+                // Premier chargement : on remplace
+                state.events = action.payload.events;
+            } else {
+                // Clic sur "Charger plus" : on ajoute à la suite !
+                state.events = [...state.events, ...action.payload.events];
+            }
         },
         fetchPaginatedEventsError: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload;
-        },
-        setPage: (state, action: PayloadAction<number>) => {
-            state.currentPage = action.payload;
         },
     },
 });
@@ -65,6 +64,5 @@ export const {
     fetchPaginatedEventsLoading,
     fetchPaginatedEventsSuccess,
     fetchPaginatedEventsError,
-    setPage,    
 } = eventsSlice.actions;
 export default eventsSlice.reducer;

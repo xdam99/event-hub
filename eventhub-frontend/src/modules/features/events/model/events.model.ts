@@ -15,7 +15,6 @@ export namespace EventsModel {
         data: Event[];
         total: number;
         page: number;
-        limit: number;
-        totalPages: number;
+        nextCursor?: string;
     }
 }

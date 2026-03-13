@@ -6,6 +6,7 @@ import Link from "@mui/material/Link";
 export const Header: React.FC = () => {
     const { profile } = useProfile();
 
+
     return (
         <AppBar position="static" elevation={1}>
         <Toolbar>

@@ -47,14 +47,11 @@ export const createEvent = async (req: Request, res: Response, next: NextFunctio
 
 export const getAllEvents = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        // 1. Récupération et typage des paramètres de pagination depuis l'URL
         const limit = parseInt(req.query.limit as string) || 10;
         const cursor = req.query.cursor as string | undefined;
 
-        // 2. On passe les paramètres au Use Case
         const result = await getAllEventsUseCase.execute({ limit, cursor });
 
-        // 3. On renvoie les données ET le curseur pour la page suivante
         res.jsonSuccess({
             events: result.events.map(e => e.props),
             nextCursor: result.nextCursor
