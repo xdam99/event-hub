@@ -4,7 +4,7 @@ import type { IDashboardQuery } from "./interfaces/dashboard-query.interface";
 
 export class FetchAnalyticsDataApi implements IDashboardQuery {
     async fetchViewsPerPage(): Promise<DashboardModel.PageViewData[]> {
-        const response = await axios.get("http://localhost:3000/analytics", {
+        const response = await axios.get("http://localhost:3000/api/analytics", {
             withCredentials: true
         });
 

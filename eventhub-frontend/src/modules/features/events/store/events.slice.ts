@@ -17,7 +17,7 @@ export const eventsSlice = createSlice({
     name: 'events',
     initialState,
     reducers: {
-        fetchEventsPending: (state) => {
+        fetchEventsLoading: (state) => {
             state.isLoading = true;
             state.error = null;
         },
@@ -25,12 +25,12 @@ export const eventsSlice = createSlice({
             state.isLoading = false;
             state.events = action.payload;
         },
-        fetchEventsFailure: (state, action) => {
+        fetchEventsError: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         },
     },
 });
 
-export const { fetchEventsPending, fetchEventsSuccess, fetchEventsFailure } = eventsSlice.actions;
+export const { fetchEventsLoading, fetchEventsSuccess, fetchEventsError } = eventsSlice.actions;
 export default eventsSlice.reducer;

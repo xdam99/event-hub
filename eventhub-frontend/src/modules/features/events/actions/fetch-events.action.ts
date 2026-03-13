@@ -1,6 +1,6 @@
 import type { Dependencies } from "../../../store/dependencies";
 import type { AppDispatch, AppGetState } from "../../../store/store";
-import { eventListSlice } from "../store/events.slice";
+import { eventsSlice } from "../store/events.slice";
 
 export const fetchEventsAction = () => async (
     dispatch: AppDispatch,
@@ -8,14 +8,14 @@ export const fetchEventsAction = () => async (
     dependencies: Dependencies
 ) => {
     try {
-        dispatch(eventListSlice.actions.fetchEventsLoading());
-        const result = await dependencies.fetchEvents.fetch();
-        dispatch(eventListSlice.actions.fetchEventsSuccess(result));
+        dispatch(eventsSlice.actions.fetchEventsLoading());
+        const result = await dependencies.eventGateway.findAll();
+        dispatch(eventsSlice.actions.fetchEventsSuccess(result));
     } catch (error) {
         let message = "Une erreur est survenue";
         if (error instanceof Error) {
             message = error.message;
         }
-        dispatch(eventListSlice.actions.fetchEventsError(message));
+        dispatch(eventsSlice.actions.fetchEventsError(message));
     }
 }

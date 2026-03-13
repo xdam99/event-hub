@@ -4,6 +4,6 @@ import axios from "axios";
 
 export class SendAnalyticsApi implements IAnalyticsGateway {
     async sendAnalytics(event: AnalyticsModel.Event): Promise<void> {
-        await axios.post("http://localhost:8000/api/analytics", event);
+        await axios.post("http://localhost:3000/api/analytics", event);
     }
 }

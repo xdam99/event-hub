@@ -75,4 +75,6 @@ Content-Type: application/json
     "token": ""  
 }
 
+### GET Analytics
+GET http://localhost:3000/api/analytics
 

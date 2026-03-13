@@ -36,7 +36,7 @@ services:
     container_name: eventhub_backend
     restart: always
     ports:
-      - "${PORT}:${PORT}"
+      - "${PORT:-3000}:${PORT:-3000}"
     depends_on:
       postgres:
         condition: service_healthy

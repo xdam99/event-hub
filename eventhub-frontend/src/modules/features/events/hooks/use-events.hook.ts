@@ -25,3 +25,5 @@ export const useEvents = () => {
         refreshEvents,
     };
 };
+
+export default useEvents;

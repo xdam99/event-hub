@@ -31,6 +31,9 @@ export const Header: React.FC = () => {
                 <Link href="/events" color="inherit">
                     Événements
                 </Link>
+                <Link href="/dashboard" color="inherit">
+                    Dashboard
+                </Link>
             </Box>
 
             {!profile ? (

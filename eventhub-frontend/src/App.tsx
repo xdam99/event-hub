@@ -7,6 +7,7 @@ import { OtpVerifyPage } from './modules/features/authentication/components/OtpV
 import { ProfilePage } from './modules/features/user/components/ProfilePage'
 import './App.css'
 import { lazy, Suspense } from 'react'
+import AnalyticsDashboard from './modules/features/dashboard/ui/AnalyticsDashboard'
 
 const Event = lazy(() => import('./modules/features/events/components/Event'))
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/otp-verify" element={<OtpVerifyPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/dashboard" element={<AnalyticsDashboard />} />
             <Route path='/events' element={
               <Suspense fallback={<div>Loading...</div>}>
                 <Event/>

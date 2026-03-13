@@ -8,10 +8,11 @@ export const sendAnalyticsAction = (event: AnalyticsModel.Event) => async (
     _: AppGetState,
     dependencies: Dependencies
 ) => {
+    dispatch(analyticsSlice.actions.sendAnalyticsLoading());
     try {
         await dependencies.analyticsGateway.sendAnalytics(event);
         dispatch(analyticsSlice.actions.sendAnalyticsSuccess());
     } catch (error) {
-        dispatch(analyticsSlice.actions.sendAnalyticsError(error as string));
+        dispatch(analyticsSlice.actions.sendAnalyticsError(error instanceof Error ? error.message : String(error)));
     }
 }

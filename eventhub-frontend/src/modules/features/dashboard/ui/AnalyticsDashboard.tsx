@@ -1,37 +1,43 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { useDashboardData } from "../hooks/use-dashboard-data";
-import { Box, Heading, Text, Center, Spinner } from "@chakra-ui/react";
+// NOUVEAU : Imports MUI
+import { Box, Typography, CircularProgress, Paper } from "@mui/material";
 
 export const AnalyticsDashboard = () => {
     const { data, status, error } = useDashboardData();
 
     if (status === "loading") return (
-        <Center py={20}>
-            <Spinner size="xl" color="teal.400" />
-        </Center>
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
+            {/* La couleur "#319795" correspond au teal.400 de Chakra et à tes barres */}
+            <CircularProgress size={60} sx={{ color: "#319795" }} />
+        </Box>
     );
 
     if (status === "error") return (
-        <Center py={20}>
-            <Text color="red.400" fontSize="lg">Erreur : {error}</Text>
-        </Center>
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
+            <Typography color="error" fontSize="1.125rem">
+                Erreur : {error}
+            </Typography>
+        </Box>
     );
 
     return (
-        <Box maxW="900px" mx="auto" py={8} px={4}>
-            <Heading as="h2" size="lg" mb={2}>
+        <Box sx={{ maxWidth: '900px', mx: 'auto', py: 4, px: 2 }}>
+            <Typography variant="h5" component="h2" sx={{ mb: 1, fontWeight: 'bold' }}>
                 Dashboard Analytics
-            </Heading>
-            <Text color="gray.500" mb={8}>
+            </Typography>
+            <Typography color="text.secondary" sx={{ mb: 4 }}>
                 Pages les plus consultées par les utilisateurs
-            </Text>
+            </Typography>
 
             {data.length === 0 ? (
-                <Box p={8} borderWidth="1px" borderRadius="md" textAlign="center">
-                    <Text color="gray.400">Aucune donnée analytics pour le moment. Naviguez entre les pages pour generer des évènements.</Text>
-                </Box>
+                <Paper variant="outlined" sx={{ p: 4, textAlign: "center", borderRadius: 2 }}>
+                    <Typography color="text.secondary">
+                        Aucune donnée analytics pour le moment. Naviguez entre les pages pour générer des évènements.
+                    </Typography>
+                </Paper>
             ) : (
-                <Box p={6} borderWidth="1px" borderRadius="md" shadow="sm" bg="white">
+                <Paper elevation={1} sx={{ p: 3, borderRadius: 2, bgcolor: 'background.paper' }}>
                     <ResponsiveContainer width="100%" height={400}>
                         <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                             <CartesianGrid strokeDasharray="3 3" />
@@ -44,7 +50,7 @@ export const AnalyticsDashboard = () => {
                             <Bar dataKey="count" fill="#319795" radius={[6, 6, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
-                </Box>
+                </Paper>
             )}
         </Box>
     );

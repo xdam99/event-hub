@@ -1,16 +1,15 @@
 import {
     Box,
     Typography,
-    Chip,
     Card,
     CardContent,
     Stack,
     Avatar,
 } from '@mui/material';
-import { useEventList } from "../hooks/use-events.hook";
+import useEvents  from "../hooks/use-events.hook";
 
 const Event = () => {
-    const hook = useEventList();
+    const hook = useEvents();
 
     return (
         <Box maxWidth="800px" mx="auto" py={4} px={2}>
@@ -29,11 +28,6 @@ const Event = () => {
                                 <Typography variant="body2" color="text.secondary" mb={1}>
                                     {event.description}
                                 </Typography>
-                                <Stack direction="row" spacing={1}>
-                                    {event.skills.map((skill) => (
-                                        <Chip key={skill} label={skill} color="primary" />
-                                    ))}
-                                </Stack>
                             </CardContent>
                         </Card>
                     ))
