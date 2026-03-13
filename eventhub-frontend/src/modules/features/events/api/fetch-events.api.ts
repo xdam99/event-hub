@@ -1,8 +1,8 @@
 import axios from "axios";
 import type { EventsModel } from "../model/events.model";
-import type { IFetchEvents } from "./interfaces/fetch-events.interface";
+import type { IEventGateway } from "./interfaces/fetch-events.interface";
 
-export class EventGateway implements IFetchEvents {
+export class EventGateway implements IEventGateway {
     async findAll(): Promise<EventsModel.Event[]> {
         try {
             const response = await axios.get(
@@ -22,6 +22,32 @@ export class EventGateway implements IFetchEvents {
             }
 
             throw new Error("Une erreur inattendue est survenue");
+        }
+    }
+    async findById(id: string): Promise<EventsModel.Event | null> {
+        try {
+            const response = await axios.get("http://localhost:3000/api/events/${id}", {
+                withCredentials: true
+            });
+            return response.data.data;
+        } catch (error: any) {
+            if (error.response?.status === 404) {
+                return null;
+            }
+            console.error(`failed to fetch event ${id}:`, error);
+            throw error;
+        }
+    }
+    async findPaginated(page: number, limit: number): Promise<EventsModel.PaginatedEvents> {
+        try {
+            const response = await axios.get("http://localhost:3000/api/events", {
+                params: { page, limit },
+                withCredentials: true,
+            });
+            return response.data.data;
+        } catch (error) {
+            console.error("Failed to fetch paginated events:", error);
+            throw error;
         }
     }
 }

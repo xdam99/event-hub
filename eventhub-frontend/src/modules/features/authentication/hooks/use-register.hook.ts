@@ -23,7 +23,6 @@ export const useRegister = () => {
 
     const { isLoading, error: authError } = useSelector((state: AppState) => state.auth);
 
-    // Redirect to profile after successful registration (token received)
     useEffect(() => {
         if (isSuccess) {
             navigate('/login');

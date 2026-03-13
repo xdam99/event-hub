@@ -19,3 +19,18 @@ export const fetchEventsAction = () => async (
         dispatch(eventsSlice.actions.fetchEventsError(message));
     }
 }
+
+export const fetchPaginatedEventsAction = (page: number, limit: number = 6) => async (
+    dispatch: AppDispatch,
+    _getState: AppGetState,
+    { eventGateway }: Dependencies
+) => {
+    dispatch(eventsSlice.actions.fetchPaginatedEventsLoading());
+    try {
+        const result = await eventGateway.findPaginated(page, limit);
+        dispatch(eventsSlice.actions.fetchPaginatedEventsSuccess(result));
+    } catch (error: any) {
+        const errorMessage = error.response?.data?.error?.message || error.message || "Erreur lors du chargement des évènements";
+        dispatch(eventsSlice.actions.fetchPaginatedEventsError(errorMessage));
+    }
+};

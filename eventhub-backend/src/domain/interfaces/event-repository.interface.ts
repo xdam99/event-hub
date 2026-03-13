@@ -3,7 +3,7 @@ import { Event } from '../entities/Event';
 export interface EventRepositoryInterface {
     create(event: Event): Promise<Event>;
 
-    findAll(): Promise<Event[]>;
+    findAll(limit: number, cursor?: string): Promise<Event[]>;
 
     findById(id: string): Promise<Event | null>;
 

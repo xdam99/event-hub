@@ -7,12 +7,12 @@ import { OtpVerifyPage } from './modules/features/authentication/components/OtpV
 import { ProfilePage } from './modules/features/user/components/ProfilePage'
 import './App.css'
 import { lazy, Suspense } from 'react'
-import AnalyticsDashboard from './modules/features/dashboard/ui/AnalyticsDashboard'
+import AnalyticsDashboard from './modules/features/dashboard/components/AnalyticsDashboard'
+import { Box, CircularProgress } from '@mui/material'
 
 const Event = lazy(() => import('./modules/features/events/components/Event'))
 
-//Browerrouter to provide routing
-//Routes to provide routes
+
 function App() {
   return (
     <AppWrapper>
@@ -22,11 +22,16 @@ function App() {
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
+            <Route path="/logout" element={<Navigate to="/login" replace />} />
             <Route path="/otp-verify" element={<OtpVerifyPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/dashboard" element={<AnalyticsDashboard />} />
             <Route path='/events' element={
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={
+                <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
+                  <CircularProgress size={60} sx={{ color: "#319795" }} />
+                </Box>
+              }>
                 <Event/>
               </Suspense>
             }/>

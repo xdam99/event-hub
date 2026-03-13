@@ -78,3 +78,10 @@ Content-Type: application/json
 ### GET Analytics
 GET http://localhost:3000/api/analytics
 
+### Test de la pagination
+GET http://localhost:3000/api/events?limit=3
+Accept: application/json
+
+### 2. Récupérer la DEUXIÈME page
+GET http://localhost:3000/api/events?limit=3&cursor=ba111e81-0cb9-48be-beb4-17c75571af29
+Accept: application/json

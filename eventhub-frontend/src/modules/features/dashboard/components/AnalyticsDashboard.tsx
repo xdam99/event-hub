@@ -8,7 +8,6 @@ export const AnalyticsDashboard = () => {
 
     if (status === "loading") return (
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
-            {/* La couleur "#319795" correspond au teal.400 de Chakra et à tes barres */}
             <CircularProgress size={60} sx={{ color: "#319795" }} />
         </Box>
     );

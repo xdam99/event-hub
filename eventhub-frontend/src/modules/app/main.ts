@@ -2,9 +2,9 @@ import { type Dependencies } from "../store/dependencies";
 import { createStore, type AppStore } from "../store/store";
 import { AuthGateway } from "../features/authentication/gateway/auth.gateway";
 import { UserGateway } from "../features/user/gateway/user.gateway";
-import { EventGateway } from "../features/events/gateway/event.gateway";
 import { SendAnalyticsApi } from "../features/analytics/api/send-analytics.api";
 import { FetchAnalyticsDataApi } from "../features/dashboard/api/fetch-analytics-data.api";
+import { EventGateway } from "../features/events/api/fetch-events.api";
 
 export class App {
     public dependencies: Dependencies;

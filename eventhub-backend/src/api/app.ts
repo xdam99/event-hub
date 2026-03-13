@@ -5,6 +5,7 @@ import { ApiResponseMiddleware, errorHandlerMiddleware } from './middlewares/ind
 import { getEnvVariable } from './utility/index';
 import Router from './routes/index';
 import cookieParser from 'cookie-parser';
+import { initializeMongoose } from './config/mongoose.config';
 
 dotenv.config();
 
@@ -32,7 +33,13 @@ app.use(errorHandlerMiddleware);
 
 const PORT = getEnvVariable('PORT') || 3000;
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port : ${PORT}`);
-    console.log(`Swagger docs : http://localhost:${PORT}/api/doc`);
-});
+const startServer = async () => {
+    await initializeMongoose();
+    
+    app.listen(PORT, () => {
+        console.log(`Server is running on port : ${PORT}`);
+        console.log(`Swagger docs : http://localhost:${PORT}/api/doc`);
+    });
+}
+
+startServer().then(() => console.log('Server started successfully'))

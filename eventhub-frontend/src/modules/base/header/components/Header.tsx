@@ -23,22 +23,12 @@ export const Header: React.FC = () => {
 
             <Box sx={{ flexGrow: 1 }} />
 
-            <Box sx={{ display: "flex", gap: 1 }}>
-                <Link href="/" color="inherit">
-                    Accueil
-                </Link>
 
-                <Link href="/events" color="inherit">
-                    Événements
-                </Link>
-                <Link href="/dashboard" color="inherit">
-                    Dashboard
-                </Link>
-            </Box>
+
 
             {!profile ? (
-
-            <Box sx={{ display: "flex", gap: 1 }}>
+                
+                <Box sx={{ display: "flex", gap: 1 }}>
                 <Link href="/login" color="inherit">
                 Se connecter
                 </Link>
@@ -50,9 +40,23 @@ export const Header: React.FC = () => {
 
             ) : (
 
-            <Button color="inherit" variant="outlined">
-                Se déconnecter
-            </Button>
+                <Box sx={{ display: "flex", gap: 1 }}>
+                    <Link href="/" color="inherit">
+                        Accueil
+                    </Link>
+                    <Link href="/events" color="inherit">
+                        Événements
+                    </Link>
+                    <Link href="/dashboard" color="inherit">
+                        Dashboard
+                    </Link>
+                    <Button color="inherit" variant="outlined">
+                        <Link href="/logout" color="inherit">
+                            Se déconnecter
+                        </Link>
+                    </Button>
+                </Box>
+    
 
             )}
         </Toolbar>
