@@ -8,6 +8,9 @@
     "start": "nodemon",
     "seed": "ts-node src/infrastructure/database/seed.ts"
   },
+  "prisma": {
+    "schema": "src/infrastructure/database/schema.prisma"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
