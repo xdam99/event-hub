@@ -4,16 +4,16 @@ services:
     container_name: eventhub_postgres
     restart: always
     env_file:
-      - .env.docker
+      - ./eventhub-backend/.env.docker
     ports:
       - "5434:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U user -d eventhub" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      interval: 10s
+      timeout: 10s
+      retries: 10
 
   mongo:
     image: mongo:latest
@@ -32,7 +32,7 @@ services:
   #     - '6379:6379'
 
   backend:
-    build: .
+    build: ./eventhub-backend
     container_name: eventhub_backend
     restart: always
     ports:
@@ -41,7 +41,24 @@ services:
       postgres:
         condition: service_healthy
     env_file:
-      - .env.docker
+      - ./eventhub-backend/.env.docker
+    volumes:
+      - ./eventhub-backend:/app
+      - /app/node_modules
+
+  frontend:
+    build: ./eventhub-frontend
+    container_name: eventhub_frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./eventhub-frontend/.env.docker
+    volumes:
+      - ./eventhub-frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
 
 volumes:
   pgdata:

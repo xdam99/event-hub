@@ -13,8 +13,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Cart {
+  id        String     @id @default(uuid())
+  userId    String     @unique
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+  total     Float      @default(0)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id])
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, eventId])
+}
+
 model Event {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   title       String
   description String?
   startDate   DateTime
@@ -24,31 +48,32 @@ model Event {
   organizerId String
   categoryId  String
   imageUrl    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  cartItems   CartItem[]
 
   @@unique([title, startDate])
 }
 
 model User {
-    id          String   @id @default(uuid())
-    username    String
-    email       String   @unique
-    password    String
-    salt        String
-    otp_secret  String?  @db.VarChar(40)
-    otp_enable  Int      @default(0)
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-
-    otpBackupCode OtpBackupCode?
+  id            String         @id @default(uuid())
+  username      String
+  email         String         @unique
+  password      String
+  salt          String
+  otp_secret    String?        @db.VarChar(40)
+  otp_enable    Int            @default(0)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  cart          Cart?
+  otpBackupCode OtpBackupCode?
 }
 
 model OtpBackupCode {
-    id                   Int    @id @default(autoincrement())
-    user_id              String @unique
-    codes                String
-    nb_code_used         Int    @default(0)
-    nb_consecutive_tests Int    @default(0)
-    user                 User   @relation(fields: [user_id], references: [id])
+  id                   Int    @id @default(autoincrement())
+  user_id              String @unique
+  codes                String
+  nb_code_used         Int    @default(0)
+  nb_consecutive_tests Int    @default(0)
+  user                 User   @relation(fields: [user_id], references: [id])
 }

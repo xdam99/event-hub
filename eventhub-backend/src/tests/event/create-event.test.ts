@@ -1,5 +1,6 @@
-import { CreateEventUseCase } from '../application/usecases/index';
-import { InMemoryEventRepository } from '../infrastructure/repositories/in-memory-event.repository';
+import { CreateEventUseCase } from '../../application/usecases/events-usecases/create-event.usecase';
+import { InMemoryEventRepository } from '../../infrastructure/repositories/in-memory-event.repository';
+import { describe, it, expect, beforeEach } from '@jest/globals';
 
 describe('CreateEventUseCase', () => {
     let useCase: CreateEventUseCase;
@@ -13,7 +14,7 @@ describe('CreateEventUseCase', () => {
     it('should throw an error if title is empty', async () => {
         const eventData = {
             title: '',
-            startDate: new Date(Date.now() + 86400000), // Tomorrow
+            startDate: new Date(Date.now() + 86400000),
             venueId: 'venue-1',
             capacity: 100,
             price: 50,
@@ -27,7 +28,7 @@ describe('CreateEventUseCase', () => {
     it('should throw an error if start date is in the past', async () => {
         const eventData = {
             title: 'My Event',
-            startDate: new Date(Date.now() - 86400000), // Yesterday
+            startDate: new Date(Date.now() - 86400000),
             venueId: 'venue-1',
             capacity: 100,
             price: 50,
@@ -41,7 +42,7 @@ describe('CreateEventUseCase', () => {
     it('should throw an error if venueId is missing', async () => {
         const eventData = {
             title: 'My Event',
-            startDate: new Date(Date.now() + 86400000), // Tomorrow
+            startDate: new Date(Date.now() + 86400000),
             venueId: '',
             capacity: 100,
             price: 50,
@@ -55,7 +56,7 @@ describe('CreateEventUseCase', () => {
     it('should throw an error if capacity is not positive', async () => {
         const eventData = {
             title: 'My Event',
-            startDate: new Date(Date.now() + 86400000), // Tomorrow
+            startDate: new Date(Date.now() + 86400000),
             venueId: 'venue-1',
             capacity: -1,
             price: 50,

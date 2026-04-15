@@ -1,5 +1,15 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYwNzZhNzQ5LTk4YzQtNGI5MS04MTdhLWM2NzQ1ZjIwZWE1NSIsInB1cnBvc2UiOiJvdHAtdmVyaWZpY2F0aW9uIiwiaWF0IjoxNzczMzM2Mzk0LCJleHAiOjE3NzMzMzY2OTR9.4z9-2-0uLPuClPWpcbt16WFP3gbZpscSiWZeZbVY3nI
-@Eventid=0d0f0239-a1cb-4cd7-9b9a-783f15676130
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjNjQyNDA0LTIyNGYtNDUwZi1iODRhLTg5OGU4ODhkNzA5YyIsInVzZXJuYW1lIjoiRGFtaWVuIEoiLCJlbWFpbCI6ImRhbWllbkBnbWFpbC5jb20iLCJjcmVhdGVkQXQiOiIyMDI2LTA0LTE0VDA3OjQ3OjMyLjU0OVoiLCJ1cGRhdGVkQXQiOiIyMDI2LTA0LTE0VDA3OjQ3OjMyLjU0OVoiLCJpYXQiOjE3NzYxNTI4NTUsImV4cCI6MTc3NjIzOTI1NX0.SktTVQPeWTGP7EsOB61qj-gv5goWrcDkuQz0r7qdzgI
+@Eventid=3139d4f5-0a21-4b03-aa7b-e243b43bbe63
+
+### Register
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+    "username": "Damien J",
+    "email": "damien@gmail.com",
+    "password": "metallicaKH02**"
+}
 
 ### Login
 POST http://localhost:3000/api/users/login
@@ -85,3 +95,14 @@ Accept: application/json
 ### 2. Récupérer la DEUXIÈME page
 GET http://localhost:3000/api/events?limit=3&cursor=ba111e81-0cb9-48be-beb4-17c75571af29
 Accept: application/json
+
+### Ajouter un billet au panier
+POST http://localhost:3000/api/cart/add
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "eventId": "3139d4f5-0a21-4b03-aa7b-e243b43bbe63",
+    "price": 50,
+    "quantity": 2
+}

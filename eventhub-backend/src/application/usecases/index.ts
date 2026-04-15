@@ -12,3 +12,5 @@ export * from './otp-usecases/enable-otp-option.usecase';
 export * from './otp-usecases/verify-otp-login.usecase';
 export * from './otp-usecases/verify-backup-code.usecase';
 export * from './otp-usecases/disable-otp-option.usecase';
+
+export * from './cart-usecases/add-to-cart.usecase';
