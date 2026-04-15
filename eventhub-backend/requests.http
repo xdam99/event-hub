@@ -1,0 +1,108 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjNjQyNDA0LTIyNGYtNDUwZi1iODRhLTg5OGU4ODhkNzA5YyIsInVzZXJuYW1lIjoiRGFtaWVuIEoiLCJlbWFpbCI6ImRhbWllbkBnbWFpbC5jb20iLCJjcmVhdGVkQXQiOiIyMDI2LTA0LTE0VDA3OjQ3OjMyLjU0OVoiLCJ1cGRhdGVkQXQiOiIyMDI2LTA0LTE0VDA3OjQ3OjMyLjU0OVoiLCJpYXQiOjE3NzYxNTI4NTUsImV4cCI6MTc3NjIzOTI1NX0.SktTVQPeWTGP7EsOB61qj-gv5goWrcDkuQz0r7qdzgI
+@Eventid=3139d4f5-0a21-4b03-aa7b-e243b43bbe63
+
+### Register
+POST http://localhost:3000/api/users/register
+Content-Type: application/json
+
+{
+    "username": "Damien J",
+    "email": "damien@gmail.com",
+    "password": "metallicaKH02**"
+}
+
+### Login
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+    "email": "damien@gmail.com",
+    "password": "metallicaKH02**"
+}
+
+### POST Event
+POST http://localhost:3000/api/events/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{           
+    "title": "JAVAFEST",
+    "description": "Event",
+    "startDate": "2027-01-16T19:25:28.984Z",
+    "venueId": "10 Rue de Jeanne",
+    "capacity": 100,
+    "organizerId": "Damien J",
+    "categoryId": "Api",
+    "price": 55
+}
+
+
+### GET Events
+GET http://localhost:3000/api/events/
+Authorization: Bearer {{token}}
+
+### GET Event By ID 
+GET http://localhost:3000/api/events/{{Eventid}}
+Authorization: Bearer {{token}}
+
+### PUT Event with JWT
+PUT http://localhost:3000/api/events/{{Eventid}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{           
+    "title": "JAVAFEST 2026",
+    "description": "Event",
+    "capacity": 3000,
+    "price": 75
+}
+
+### DELETE Event with JWT
+DELETE http://localhost:3000/api/events/{{Eventid}}
+Authorization: Bearer {{token}}
+
+### GET QR Code pour 2FA
+GET http://localhost:3000/api/otp/generate
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### POST Vérification du code de Google Authenticator
+POST http://localhost:3000/api/otp/verify-activation
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRjNjhhNmExLTk0N2MtNGY3YS04OGJhLTgwYTcxYmM5OGU5MSIsImZpcnN0TmFtZSI6IkRhbWllbiIsImxhc3ROYW1lIjoiSiIsImVtYWlsIjoiZGFtaWVuQGdtYWlsLmNvbSIsInBob25lIjoiMDEyMzQ1Njc4OSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MDkxMDQ2MCwiZXhwIjoxNzcwOTk2ODYwfQ.dO0VWxEAL1do1Gtgsp0cP96aSFbg_2DriYPy2VQ2wcY",          # Remplacer par le code de Google Authenticator
+    "secret": "HD47J5PDMRC6SJJYLP4CNUQQ6RK4RVZU"
+}
+
+### Login avec Damien et OTP
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "metallicaKH02**",
+    "token": ""  
+}
+
+### GET Analytics
+GET http://localhost:3000/api/analytics
+
+### Test de la pagination
+GET http://localhost:3000/api/events?limit=3
+Accept: application/json
+
+### 2. Récupérer la DEUXIÈME page
+GET http://localhost:3000/api/events?limit=3&cursor=ba111e81-0cb9-48be-beb4-17c75571af29
+Accept: application/json
+
+### Ajouter un billet au panier
+POST http://localhost:3000/api/cart/add
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "eventId": "3139d4f5-0a21-4b03-aa7b-e243b43bbe63",
+    "price": 50,
+    "quantity": 2
+}
