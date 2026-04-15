@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
+COPY src/infrastructure/database/schema.prisma ./src/infrastructure/database/
+
 RUN npm install
 
 COPY . .
