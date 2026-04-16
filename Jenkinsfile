@@ -50,7 +50,7 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            steps {
+            script {
                 def SCANNER_HOME = tool 'SonarScanner'
 
                 dir("${DEPLOY_DIR}") {
