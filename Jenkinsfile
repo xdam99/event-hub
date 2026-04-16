@@ -38,7 +38,12 @@ pipeline {
             //     }
             // }
             steps {
-                dir('eventhub-backend') { sh 'npm run test' }
+                dir('eventhub-backend') {
+                    nodejs('NodeJS 20') {
+                        sh 'npm install'
+                        sh 'npm run test'
+                    }
+                }
             }
         }
     }
