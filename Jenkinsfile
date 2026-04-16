@@ -51,6 +51,8 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
+                def SCANNER_HOME = tool 'SonarScanner'
+
                 dir("${DEPLOY_DIR}") {
                     withSonarQubeEnv('SonarQube') {
                         sh '''
