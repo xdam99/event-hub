@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        nodejs 'node20'
+    }
     stages {
         stage('Preparation') {
             steps {
@@ -27,9 +30,8 @@ pipeline {
         stage('Tests') {
             steps {
                 dir('eventhub-backend') {
-                    sh '''
-                    docker run --rm -v "\$(pwd):/app" -w /app node:20 sh -c "npm install && npm run test"
-                    '''
+                    sh 'npm install'
+                    sh 'npm run test'
                 }
             }
         }
