@@ -7,6 +7,7 @@ pipeline {
 
     environment {
         SONAR_TOKEN = credentials('sonarqube-token')
+        DEPLOY_DIR = 'EventHub'
     }
 
     stages {
