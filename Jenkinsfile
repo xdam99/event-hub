@@ -25,25 +25,11 @@ pipeline {
         }  
 
         stage('Tests') {
-            // parallel {
-            //     stage('Backend Unit Tests') {
-            //         steps {
-            //             dir('eventhub-backend') { sh 'npm run test' }
-            //         }
-            //     }
-            //     stage('Frontend Tests') {
-            //         steps {
-            //             dir('eventhub-frontend') { sh 'npm run test' }
-            //         }
-            //     }
-            // }
-            agent {
-                docker { image 'node:20' }
-            }
             steps {
                 dir('eventhub-backend') {
-                    sh 'npm install'
-                    sh 'npm run test'
+                    sh '''
+                    docker run --rm -v "\$(pwd):/app" -w /app node:20 sh -c "npm install && npm run test"
+                    '''
                 }
             }
         }
