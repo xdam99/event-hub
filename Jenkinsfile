@@ -40,10 +40,8 @@ pipeline {
             //         }
             //     }
             // }
-            stage('Backend Unit Tests') {
-                steps {
-                    dir('eventhub-backend') { sh 'npm run test' }
-                }
+            steps {
+                dir('eventhub-backend') { sh 'npm run test' }
             }
         }
     }
