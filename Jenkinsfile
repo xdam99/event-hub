@@ -50,17 +50,19 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            script {
-                def SCANNER_HOME = tool 'SonarScanner'
+            steps {
+                script {
+                    def SCANNER_HOME = tool 'SonarScanner'
 
-                dir("${DEPLOY_DIR}") {
-                    withSonarQubeEnv('SonarQube') {
-                        sh '''
-                            ${SCANNER_HOME}/bin/sonar-scanner \
-                                -Dsonar.projectKey=eventhub \
-                                -Dsonar.sources=eventhub-backend/src/api, eventhub-backend/infrastructure, eventhub-backend/utility, eventhub-frontend/src \
-                                -Dsonar.exclusions=/node_modules/, /dist/, */.test.ts
-                        '''
+                    dir("${DEPLOY_DIR}") {
+                        withSonarQubeEnv('SonarQube') {
+                            sh '''
+                                ${SCANNER_HOME}/bin/sonar-scanner \
+                                    -Dsonar.projectKey=eventhub \
+                                    -Dsonar.sources=eventhub-backend/src/api, eventhub-backend/infrastructure, eventhub-backend/utility, eventhub-frontend/src \
+                                    -Dsonar.exclusions=/node_modules/, /dist/, */.test.ts
+                            '''
+                        }
                     }
                 }
             }
