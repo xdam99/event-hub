@@ -1,8 +1,9 @@
 pipeline {
     agent any
     tools {
-        nodejs 'node-20'
+        nodejs 'node20' 
     }
+
     stages {
         stage('Preparation') {
             steps {
@@ -14,18 +15,18 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Build') {
             steps {
                 build 'BuildEventhubJob'
             }
         }
-        
+
         stage('Results') {
             steps {
                 build 'TestEventHubJob'
             }
-        }  
+        }
 
         stage('Tests') {
             steps {
@@ -36,9 +37,16 @@ pipeline {
             }
         }
     }
+
     post {
-        always { echo 'Pipeline completed.' }
-        success { echo 'Pipeline succeeded.' }
-        failure { echo 'Pipeline failed.' }
+        always { 
+            echo 'Pipeline completed.' 
+        }
+        success { 
+            echo 'Pipeline succeeded.' 
+        }
+        failure { 
+            echo 'Pipeline failed.' 
+        }
     }
 }
