@@ -52,16 +52,14 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    def SCANNER_HOME = tool 'SonarScanner'
-
-                    dir("${DEPLOY_DIR}") {
+                    def scannerHome = tool 'SonarScanner' 
+                    
+                    dir('EventHub') {
                         withSonarQubeEnv('SonarQube') {
-                            sh '''
-                                ${SCANNER_HOME}/bin/sonar-scanner \
-                                    -Dsonar.projectKey=eventhub \
-                                    -Dsonar.sources=eventhub-backend/src/api, eventhub-backend/infrastructure, eventhub-backend/utility, eventhub-frontend/src \
-                                    -Dsonar.exclusions=/node_modules/, /dist/, */.test.ts
-                            '''
+                            sh "${scannerHome}/bin/sonar-scanner " +
+                            "-Dsonar.projectKey=eventhub " +
+                            "-Dsonar.sources=eventhub-backend/src/api,eventhub-backend/infrastructure,eventhub-backend/utility,eventhub-frontend/src " +
+                            "-Dsonar.exclusions=**/node_modules/**,**/dist/**,**/*.test.ts"
                         }
                     }
                 }
