@@ -42,6 +42,9 @@ services:
         condition: service_healthy
     env_file:
       - ./eventhub-backend/.env.docker
+    volumes:
+      - ./eventhub-backend:/app
+      - /app/node_modules
 
   frontend:
     build: ./eventhub-frontend
@@ -51,6 +54,9 @@ services:
       - "5173:5173"
     env_file:
       - ./eventhub-frontend/.env.docker
+    volumes:
+      - ./eventhub-frontend:/app
+      - /app/node_modules
     depends_on:
       - backend
 
