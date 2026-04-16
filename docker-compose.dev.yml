@@ -41,7 +41,7 @@ services:
       postgres:
         condition: service_healthy
     env_file:
-      - ./eventhub-backend/.env.docker
+      - ./eventhub-backend/.env
     volumes:
       - ./eventhub-backend:/app
       - /app/node_modules
@@ -53,7 +53,7 @@ services:
     ports:
       - "5173:5173"
     env_file:
-      - ./eventhub-frontend/.env.docker
+      - ./eventhub-frontend/.env
     volumes:
       - ./eventhub-frontend:/app
       - /app/node_modules

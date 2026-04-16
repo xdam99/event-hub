@@ -2,11 +2,13 @@ import axios from "axios";
 import type { EventsModel } from "../model/events.model";
 import type { IEventGateway } from "./interfaces/fetch-events.interface";
 
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3000/api';
+
 export class EventGateway implements IEventGateway {
     async findAll(): Promise<EventsModel.Event[]> {
         try {
             const response = await axios.get(
-                "http://localhost:3000/api/events", {
+                `${API_BASE}:3000/events`, {
                     withCredentials: true,
                 }
             );
@@ -26,7 +28,7 @@ export class EventGateway implements IEventGateway {
     }
     async findById(id: string): Promise<EventsModel.Event | null> {
         try {
-            const response = await axios.get("http://localhost:3000/api/events/${id}", {
+            const response = await axios.get(`${API_BASE}/events/${id}`, {
                 withCredentials: true
             });
             return response.data.data;
@@ -40,7 +42,7 @@ export class EventGateway implements IEventGateway {
     }
     async findPaginated(cursor: string, limit: number): Promise<EventsModel.PaginatedEvents> {
         try {
-            const response = await axios.get("http://localhost:3000/api/events", {
+            const response = await axios.get(`${API_BASE}/events`, {
                 params: { cursor, limit },
                 withCredentials: true,
             });

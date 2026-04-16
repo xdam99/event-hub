@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { AppState } from '../../../store/store';
 import type { Dependencies } from '../../../store/dependencies';
 
-const API_BASE = 'http://localhost:3000/api';
 
 export interface UserProfile {
     id: string;

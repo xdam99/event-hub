@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { Dependencies } from '../../../store/dependencies';
 
-const API_BASE = 'http://localhost:3000/api';
 
 interface AuthState {
     token: string | null;

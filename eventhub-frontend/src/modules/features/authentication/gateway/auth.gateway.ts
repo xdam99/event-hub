@@ -7,7 +7,7 @@ export interface IAuthGateway {
     verifyBackupCode(tempToken: string, backupCode: string): Promise<any>;
 }
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3000/api';
 
 export class AuthGateway implements IAuthGateway {
     async login(email: string, password: string) {
