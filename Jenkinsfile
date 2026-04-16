@@ -1,73 +1,3 @@
-// pipeline {
-//     agent any
-//     tools {
-//         nodejs 'node20' 
-//     }
-
-//     stages {
-//         stage('Preparation') {
-//             steps {
-//                 catchError(buildResult: 'SUCCESS') {
-//                     sh 'docker stop eventhub_frontend'
-//                     sh 'docker stop eventhub_backend'
-//                     sh 'docker rm eventhub_frontend'
-//                     sh 'docker rm eventhub_backend'
-//                 }
-//             }
-//         }
-
-//         stage('Build') {
-//             steps {
-//                 build 'BuildEventhubJob'
-//             }
-//         }
-
-//         stage('Results') {
-//             steps {
-//                 build 'TestEventHubJob'
-//             }
-//         }
-
-//         stage('Tests') {
-//             steps {
-//                 dir('eventhub-backend') {
-//                     sh 'npm install'
-//                     sh 'npm run test'
-//                 }
-//             }
-//         }
-//         stage('SonarQube Analysis') {
-//             steps {
-//                 dir('back') {
-//                     withSonarQubeEnv('SonarQube') {
-//                         sh "${tool('SonarScanner')}/bin/sonar-scanner"
-//                     }
-//                 }
-//             }
-//         }
-
-//         stage('Quality Gate') {
-//             steps {
-//                 timeout(time: 5, unit: 'MINUTES') {
-//                     waitForQualityGate abortPipeline: true
-//                 }
-//             }
-//         }
-//     }
-
-
-//     post {
-//         always { 
-//             echo 'Pipeline completed.' 
-//         }
-//         success { 
-//             echo 'Pipeline succeeded.' 
-//         }
-//         failure { 
-//             echo 'Pipeline failed.' 
-//         }
-//     }
-// }
 pipeline {
     agent any
 
@@ -120,9 +50,14 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                dir('back') {
+                dir("${DEPLOY_DIR}") {
                     withSonarQubeEnv('SonarQube') {
-                        sh "${tool('SonarScanner')}/bin/sonar-scanner"
+                        sh '''
+                            ${SCANNER_HOME}/bin/sonar-scanner \
+                                -Dsonar.projectKey=eventhub \
+                                -Dsonar.sources=eventhub-backend/src/api, eventhub-backend/infrastructure, eventhub-backend/utility, eventhub-frontend/src \
+                                -Dsonar.exclusions=/node_modules/, /dist/, */.test.ts
+                        '''
                     }
                 }
             }
