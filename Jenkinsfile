@@ -7,7 +7,6 @@ pipeline {
 
     environment {
         SONAR_TOKEN = credentials('sonarqube-token')
-        DEPLOY_DIR = 'EventHub'
     }
 
     stages {
@@ -53,14 +52,13 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool 'SonarScanner' 
-                    
-                    dir('EventHub') {
-                        withSonarQubeEnv('SonarQube') {
-                            sh "${scannerHome}/bin/sonar-scanner " +
-                            "-Dsonar.projectKey=eventhub " +
-                            "-Dsonar.sources=eventhub-backend/src/api,eventhub-backend/infrastructure,eventhub-backend/utility,eventhub-frontend/src " +
-                            "-Dsonar.exclusions=**/node_modules/**,**/dist/**,**/*.test.ts"
-                        }
+                    withSonarQubeEnv('SonarQube') {
+                        sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=eventhub \
+                        -Dsonar.sources=. \
+                        -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/*.test.ts
+                        """
                     }
                 }
             }
