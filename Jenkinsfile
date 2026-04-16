@@ -25,14 +25,6 @@ pipeline {
             }
         }
 
-        // stage('Lint') {
-        //     steps {
-        //         dir('back') {
-        //             sh 'npx eslint src/ || true'
-        //         }
-        //     }
-        // }
-
         stage('Tests') {
             parallel {
                 stage('Backend Unit Tests') {
@@ -74,37 +66,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh "docker build -t eventhub-backend ./eventhub-backend"
-                sh "docker build -t eventhub-frontend ./eventhub-frontend"
-            }
-        }
-
-        // stage('Docker Push') {
-        //     when { branch 'main' }
-        //     steps {
-        //         withCredentials([usernamePassword(
-        //             credentialsId: 'dockerhub-creds',
-        //             usernameVariable: 'DOCKER_USER',
-        //             passwordVariable: 'DOCKER_PASS'
-        //         )]) {
-        //             sh '''
-        //                 echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-        //                 docker tag eventhub-backend:${IMAGE_TAG} ${DOCKER_USER}/eventhub-backend:${IMAGE_TAG}
-        //                 docker tag eventhub-frontend:${IMAGE_TAG} ${DOCKER_USER}/eventhub-frontend:${IMAGE_TAG}
-        //                 docker push ${DOCKER_USER}/eventhub-backend:${IMAGE_TAG}
-        //                 docker push ${DOCKER_USER}/eventhub-frontend:${IMAGE_TAG}
-        //             '''
-        //         }
-        //     }
-        // }
-
-        stage('Deploy') {
-            when { branch 'main' }
-            steps {
-                sh '''
-                    docker compose down || true
-                    docker compose up -d --build
-                '''
+                build 'BuildEventhubJob'
             }
         }
     }
