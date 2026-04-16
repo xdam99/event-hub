@@ -37,12 +37,13 @@ pipeline {
             //         }
             //     }
             // }
+            agent {
+                docker { image 'node:20' }
+            }
             steps {
                 dir('eventhub-backend') {
-                    nodejs('NodeJS 20') {
-                        sh 'npm install'
-                        sh 'npm run test'
-                    }
+                    sh 'npm install'
+                    sh 'npm run test'
                 }
             }
         }
