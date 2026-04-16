@@ -74,8 +74,8 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh "docker build -t eventhub-backend ./back"
-                sh "docker build -t eventhub-frontend ./front"
+                sh "docker build -t eventhub-backend ./eventhub-backend"
+                sh "docker build -t eventhub-frontend ./eventhub-frontend"
             }
         }
 
