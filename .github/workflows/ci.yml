@@ -9,12 +9,8 @@ on:
 jobs:
   test-backend:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./eventhub-backend 
-
     steps:
-      - [cite_start]name: Checkout du code [cite: 5]
+      - name: Checkout du code
         uses: actions/checkout@v4
 
       - name: Installation de Node.js
@@ -24,6 +20,8 @@ jobs:
 
       - name: Installation des dépendances
         run: npm install
+        working-directory: ./eventhub-backend
 
-      - [cite_start]name: Exécution des tests unitaires [cite: 5]
+      - name: Exécution des tests unitaires
         run: npm test
+        working-directory: ./eventhub-backend
