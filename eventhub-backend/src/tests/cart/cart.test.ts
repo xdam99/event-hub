@@ -1,4 +1,3 @@
-// tests/unit/Cart.test.ts
 import { addItemToCart, Cart, CartItem } from '../../domain/entities/Cart';
 import { describe, it, expect } from '@jest/globals';
 

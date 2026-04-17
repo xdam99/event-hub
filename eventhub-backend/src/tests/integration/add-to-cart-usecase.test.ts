@@ -1,4 +1,3 @@
-// tests/integration/AddToCartUseCase.test.ts
 import { AddToCartUseCase } from '../../application/usecases/cart-usecases/add-to-cart.usecase';
 import { Cart } from '../../domain/entities/Cart';
 import { describe, it, expect, beforeEach } from '@jest/globals';
