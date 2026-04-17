@@ -3,7 +3,6 @@ import { AddToCartUseCase } from '../../application/usecases/cart-usecases/add-t
 import { Cart } from '../../domain/entities/Cart';
 import { describe, it, expect, beforeEach } from '@jest/globals';
 
-// 1. On crée un "Fake" Repository pour isoler le test de la vraie BDD
 class InMemoryCartRepository {
     private carts: Map<string, Cart> = new Map();
 

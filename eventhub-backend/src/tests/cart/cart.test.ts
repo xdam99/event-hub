@@ -11,7 +11,7 @@ describe('Cart Domain Logic (Pure Functions)', () => {
 
         expect(updatedCart.items.length).toBe(1);
         expect(updatedCart.items[0].eventId).toBe('event-fest-1');
-        expect(updatedCart.total).toBe(100); // 50 * 2
+        expect(updatedCart.total).toBe(100);
         
         expect(initialCart.items.length).toBe(0);
     });
