@@ -1,8 +1,11 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { EventsModel } from '../model/events.model';
+// 🌟 Ajout de l'import de ton action
+import { fetchEventByIdAction } from '../actions/fetch-event-by-id.action'; 
 
 interface EventsState {
     events: EventsModel.Event[];
+    currentEvent: EventsModel.Event | null; // 🌟 Ajout de l'événement unique
     isLoading: boolean;
     error: string | null;
     nextCursor?: string;
@@ -11,6 +14,7 @@ interface EventsState {
 
 const initialState: EventsState = {
     events: [],
+    currentEvent: null, // 🌟 Initialisation
     isLoading: false,
     error: null,
     nextCursor: undefined,
@@ -43,10 +47,8 @@ export const eventsSlice = createSlice({
             state.nextCursor = action.payload.nextCursor;
 
             if (action.payload.isFirstPage) {
-                // Premier chargement : on remplace
                 state.events = action.payload.events;
             } else {
-                // Clic sur "Charger plus" : on ajoute à la suite !
                 state.events = [...state.events, ...action.payload.events];
             }
         },
@@ -55,6 +57,23 @@ export const eventsSlice = createSlice({
             state.error = action.payload;
         },
     },
+    // 🌟 Ajout des extraReducers pour gérer createAsyncThunk
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchEventByIdAction.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+                state.currentEvent = null; // On vide l'ancien événement au chargement
+            })
+            .addCase(fetchEventByIdAction.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.currentEvent = action.payload; // On stocke l'événement récupéré
+            })
+            .addCase(fetchEventByIdAction.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload as string; // On gère l'erreur
+            });
+    }
 });
 
 export const { 

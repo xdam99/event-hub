@@ -9,6 +9,7 @@ import {
     CircularProgress
 } from '@mui/material';
 import { useEvents } from "../hooks/use-events.hook";
+import { Link } from 'react-router-dom';
 
 const Event = () => {
     // Récupération des données et fonctions depuis ton hook Redux mis à jour
@@ -34,6 +35,14 @@ const Event = () => {
                                 <Typography variant="body2" color="text.secondary" mb={1}>
                                     {event.description}
                                 </Typography>
+                                <Typography variant="caption" color="text.secondary">
+                                    {new Date(event.startDate).toLocaleString()}
+                                </Typography>
+                                <Button>
+                                    <Link to={`/events/${event.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        Voir les détails
+                                    </Link>
+                                </Button>
                             </CardContent>
                         </Card>
                     ))

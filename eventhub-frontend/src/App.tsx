@@ -10,6 +10,7 @@ import { lazy, Suspense } from 'react'
 import AnalyticsDashboard from './modules/features/dashboard/components/AnalyticsDashboard'
 import { Box, CircularProgress } from '@mui/material'
 import Logout from './modules/features/authentication/components/Logout'
+import EventById from './modules/features/events/components/EventById'
 
 const Event = lazy(() => import('./modules/features/events/components/Event'))
 
@@ -36,6 +37,7 @@ function App() {
                 <Event/>
               </Suspense>
             }/>
+            <Route path="/events/:id" element={<EventById/>} />
           </Routes>
         </Layout>
       </BrowserRouter>
