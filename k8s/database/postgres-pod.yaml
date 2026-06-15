@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-pod
+  labels:
+    app: postgres
+spec:
+  containers:
+    - name: postgres
+      image: postgres:15
+      ports:
+        - containerPort: 5432
+      env:
+        - name: POSTGRES_USER
+          value: "user"
+        - name: POSTGRES_PASSWORD
+          value: "eventhub_password"
+        - name: POSTGRES_DB
+          value: "eventhub"
+
+# PS D:\3WA\2025\Projet_Final\EventHub> kubectl describe pod postgres-pod
+# Name:             postgres-pod
+# Namespace:        default
+# Priority:         0
+# Service Account:  default
+# Node:             minikube/192.168.49.2
+# Start Time:       Thu, 21 May 2026 09:27:20 +0200
+# Labels:           app=postgres
+# Annotations:      <none>
+# Status:           Running
+# IP:               10.244.0.42
+# IPs:
+#   IP:  10.244.0.42
+# Containers:
+#   postgres:
+#     Container ID:   docker://2871841cbf3b73fa9c27c9cdb3a16e7b1119f61f5030b05a6e1ecade3f0acc07
+#     Image:          postgres:15
+#     Image ID:       docker-pullable://postgres@sha256:9d6e29202285894b16c99a14f8bb2df5a37a98791f4840d98c318de545ade08d
+#     Port:           5432/TCP
+#     Host Port:      0/TCP
+#     State:          Running
+#       Started:      Thu, 21 May 2026 09:27:33 +0200
+#     Ready:          True
+#     Restart Count:  0
+#     Environment:
+#       POSTGRES_USER:      user
+#       POSTGRES_PASSWORD:  eventhub_password
+#       POSTGRES_DB:        eventhub
+#     Mounts:
+#       /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-9rqrp (ro)
+# Conditions:
+#   Type                        Status
+#   PodReadyToStartContainers   True 
+#   Initialized                 True 
+#   Ready                       True 
+#   ContainersReady             True 
+#   PodScheduled                True 
+# Volumes:
+#   kube-api-access-9rqrp:
+#     Type:                    Projected (a volume that contains injected data from multiple sources)
+#     TokenExpirationSeconds:  3607
+#     ConfigMapName:           kube-root-ca.crt
+#     Optional:                false
+#     DownwardAPI:             true
+# QoS Class:                   BestEffort
+# Node-Selectors:              <none>
+# Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+#                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+# Events:
+#   Type    Reason     Age   From               Message
+#   ----    ------     ----  ----               -------
+#   Normal  Scheduled  101s  default-scheduler  Successfully assigned default/postgres-pod to minikube
+#   Normal  Pulling    101s  kubelet            Pulling image "postgres:15"
+#   Normal  Pulled     88s   kubelet            Successfully pulled image "postgres:15" in 13.021s (13.021s including waiting). Image size: 444607778 bytes.
+#   Normal  Created    88s   kubelet            Container created
+#   Normal  Started    88s   kubelet            Container started

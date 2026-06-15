@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eventhub-backend
+  labels:
+    app: eventhub-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: eventhub-backend
+  template:
+    metadata:
+      labels:
+        app: eventhub-backend
+    spec:
+      containers:
+        - name: backend
+          image: eventhub-backend:1.0
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: backend-config
+            - secretRef:
+                name: backend-secret

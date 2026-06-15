@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eventhub-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eventhub-frontend
+  template:
+    metadata:
+      labels:
+        app: eventhub-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: eventhub-frontend:1.1
+          ports:
+            - containerPort: 5173

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: eventhub-frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: eventhub-frontend
+  ports:
+    - port: 5173
+      targetPort: 5173

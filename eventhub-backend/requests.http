@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFjNjQyNDA0LTIyNGYtNDUwZi1iODRhLTg5OGU4ODhkNzA5YyIsInVzZXJuYW1lIjoiRGFtaWVuIEoiLCJlbWFpbCI6ImRhbWllbkBnbWFpbC5jb20iLCJjcmVhdGVkQXQiOiIyMDI2LTA0LTE0VDA3OjQ3OjMyLjU0OVoiLCJ1cGRhdGVkQXQiOiIyMDI2LTA0LTE0VDA3OjQ3OjMyLjU0OVoiLCJpYXQiOjE3NzYxNTI4NTUsImV4cCI6MTc3NjIzOTI1NX0.SktTVQPeWTGP7EsOB61qj-gv5goWrcDkuQz0r7qdzgI
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBmOTBiNjYwLWI0OTktNGE2Yi05NTcwLTk5NTNhNzkyNmI3NSIsInVzZXJuYW1lIjoiZGFtaWVuQGdtYWlsLmNvbSIsImVtYWlsIjoiZGFtaWVuQGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjYtMDUtMjFUMjE6MzM6NTMuMzE1WiIsInVwZGF0ZWRBdCI6IjIwMjYtMDUtMjFUMjE6MzM6NTMuMzE1WiIsImlhdCI6MTc3OTQwMTI4MSwiZXhwIjoxNzc5NDg3NjgxfQ.U57xpsDg1kwLxT4p6p4H42re_n3d_XANQNoS2EeLTJw
 @Eventid=3139d4f5-0a21-4b03-aa7b-e243b43bbe63
 
 ### Register
@@ -12,7 +12,8 @@ Content-Type: application/json
 }
 
 ### Login
-POST http://localhost:3000/api/users/login
+# POST http://localhost:3000/api/users/login
+POST http://127.0.0.1:57171/api/users/login
 Content-Type: application/json
 
 {
@@ -21,7 +22,8 @@ Content-Type: application/json
 }
 
 ### POST Event
-POST http://localhost:3000/api/events/
+# POST http://localhost:3000/api/events/
+POST http://127.0.0.1:57171/api/events/
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

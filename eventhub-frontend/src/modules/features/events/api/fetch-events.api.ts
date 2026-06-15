@@ -2,7 +2,7 @@ import axios from "axios";
 import type { EventsModel } from "../model/events.model";
 import type { IEventGateway } from "./interfaces/fetch-events.interface";
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3000/api';
+const API_BASE = import.meta.env.VITE_API_BASE || '/api';
 
 export class EventGateway implements IEventGateway {
     async findAll(): Promise<EventsModel.Event[]> {

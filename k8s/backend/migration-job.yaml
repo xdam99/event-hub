@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: eventhub-migrate
+spec:
+  template:
+    metadata:
+      name: eventhub-migrate
+    spec:
+      containers:
+        - name: migrate
+          image: eventhub-backend:1.0 
+          command: ["npx", "prisma", "migrate", "deploy"]
+          envFrom:
+            - configMapRef:
+                name: backend-config
+            - secretRef:
+                name: backend-secret
+      restartPolicy: OnFailure
